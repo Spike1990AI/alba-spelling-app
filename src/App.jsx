@@ -863,11 +863,24 @@ export default function App() {
 function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
   const [apiKey, setApiKey] = useState(ttsService.getApiKey() || '');
   const [saved, setSaved] = useState(false);
+  const [newPin, setNewPin] = useState('');
+  const [pinSaved, setPinSaved] = useState(false);
 
   const handleSave = () => {
     ttsService.setApiKey(apiKey);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handlePinSave = () => {
+    if (newPin.length === 4 && /^\d{4}$/.test(newPin)) {
+      localStorage.setItem('parent_pin', newPin);
+      setPinSaved(true);
+      setNewPin('');
+      setTimeout(() => setPinSaved(false), 2000);
+    } else {
+      alert('PIN must be exactly 4 digits');
+    }
   };
 
   return (
@@ -880,6 +893,22 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
           <h2 className="font-bold text-gray-800 mb-4">📊 Parent Dashboard</h2>
           <button onClick={onOpenDashboard} className="w-full py-3 rounded-lg font-bold text-white bg-purple-600 active:scale-98">
             View Detailed Report
+          </button>
+        </div>
+
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="font-bold text-gray-800 mb-2">🔒 Change Dashboard PIN</h2>
+          <p className="text-gray-600 text-sm mb-4">4-digit PIN for parent access (current: {localStorage.getItem('parent_pin') || '1234'})</p>
+          <input
+            type="number"
+            value={newPin}
+            onChange={(e) => setNewPin(e.target.value)}
+            placeholder="Enter new 4-digit PIN"
+            maxLength={4}
+            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 text-center text-2xl font-mono"
+          />
+          <button onClick={handlePinSave} className={`w-full py-3 rounded-lg font-bold text-white ${pinSaved ? 'bg-green-500' : 'bg-orange-500'} active:scale-98`}>
+            {pinSaved ? '✓ PIN Changed!' : 'Save New PIN'}
           </button>
         </div>
 
@@ -902,9 +931,101 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
   );
 }
 
+// PIN Entry component
+function PinEntry({ onSuccess, onBack }) {
+  const [pin, setPin] = useState('');
+  const [error, setError] = useState(false);
+
+  const storedPin = localStorage.getItem('parent_pin') || '1234'; // Default PIN
+
+  const handleNumberClick = (num) => {
+    if (pin.length < 4) {
+      const newPin = pin + num;
+      setPin(newPin);
+      if (newPin.length === 4) {
+        // Check PIN
+        setTimeout(() => {
+          if (newPin === storedPin) {
+            onSuccess();
+          } else {
+            setError(true);
+            setPin('');
+            setTimeout(() => setError(false), 1000);
+          }
+        }, 100);
+      }
+    }
+  };
+
+  const handleClear = () => {
+    setPin('');
+    setError(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 p-4 flex items-center justify-center">
+      <div className="max-w-sm w-full">
+        <button onClick={onBack} className="text-white/80 mb-6">← Back</button>
+        <div className="bg-white rounded-2xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">🔒 Parent Access</h2>
+          <p className="text-gray-600 mb-6 text-sm">Enter PIN to view dashboard</p>
+
+          {/* PIN Display */}
+          <div className="flex justify-center gap-3 mb-6">
+            {[0, 1, 2, 3].map(i => (
+              <div key={i} className={`w-14 h-14 rounded-lg flex items-center justify-center text-2xl font-bold border-2 ${
+                error ? 'bg-red-50 border-red-500 text-red-500' :
+                pin.length > i ? 'bg-purple-600 border-purple-600 text-white' :
+                'bg-gray-100 border-gray-300 text-gray-400'
+              }`}>
+                {pin.length > i ? '●' : '○'}
+              </div>
+            ))}
+          </div>
+
+          {error && <p className="text-red-600 font-semibold mb-4">Incorrect PIN</p>}
+
+          {/* Number Pad */}
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+              <button
+                key={num}
+                onClick={() => handleNumberClick(num.toString())}
+                className="bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg h-16 text-2xl font-bold text-gray-800"
+              >
+                {num}
+              </button>
+            ))}
+            <button
+              onClick={handleClear}
+              className="bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg h-16 text-lg font-bold text-gray-600"
+            >
+              Clear
+            </button>
+            <button
+              onClick={() => handleNumberClick('0')}
+              className="bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg h-16 text-2xl font-bold text-gray-800"
+            >
+              0
+            </button>
+            <div></div>
+          </div>
+
+          <p className="text-xs text-gray-400 mt-4">Default PIN: 1234<br/>Change in Settings</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Parent Dashboard component
 function ParentDashboard({ gameData, onBack }) {
+  const [pinVerified, setPinVerified] = useState(false);
   const { testHistory, wordStats, coins, totalCoinsEarned, streak, bestStreak, earnedBadges } = gameData;
+
+  if (!pinVerified) {
+    return <PinEntry onSuccess={() => setPinVerified(true)} onBack={onBack} />;
+  }
 
   // Calculate problem words (< 50% success rate, min 2 attempts)
   const problemWords = Object.entries(wordStats)
