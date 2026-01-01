@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ttsService from './services/tts';
 
 const sampleWords = [
   { id: 1, word: 'because', sentence: 'I stayed home due to the rain.', category: 'tricky', difficulty: 'medium' },
@@ -64,14 +65,17 @@ export default function App() {
   const [coinAnim, setCoinAnim] = useState(null);
   const [speaking, setSpeaking] = useState(false);
 
-  const speak = (text) => {
-    if ('speechSynthesis' in window) {
-      setSpeaking(true);
-      const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.85;
-      u.onend = () => setSpeaking(false);
-      speechSynthesis.speak(u);
-    }
+  const speak = async (text) => {
+    setSpeaking(true);
+    await ttsService.speak(
+      text,
+      () => setSpeaking(true),
+      () => setSpeaking(false),
+      (error) => {
+        console.error('TTS error:', error);
+        setSpeaking(false);
+      }
+    );
   };
 
   const startTest = () => {
@@ -162,13 +166,94 @@ export default function App() {
             </div>
           </button>
 
-          <button onClick={() => setScreen('progress')} className="w-full bg-white/90 rounded-2xl p-6 shadow-lg active:scale-98 flex items-center gap-4">
+          <button onClick={() => setScreen('progress')} className="w-full bg-white/90 rounded-2xl p-6 mb-4 shadow-lg active:scale-98 flex items-center gap-4">
             <span className="text-4xl">📊</span>
             <div className="text-left">
               <div className="font-bold text-lg text-gray-800">Progress</div>
               <div className="text-gray-500 text-sm">See how you're doing</div>
             </div>
           </button>
+
+          <button onClick={() => setScreen('settings')} className="w-full bg-white/10 rounded-2xl p-4 shadow active:scale-98 flex items-center justify-center gap-2">
+            <span className="text-2xl">⚙️</span>
+            <span className="text-white text-sm">Settings (Dad only)</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Settings Screen (for entering OpenAI API key)
+  if (screen === 'settings') {
+    const [apiKey, setApiKey] = useState(ttsService.getApiKey() || '');
+    const [saved, setSaved] = useState(false);
+
+    const handleSave = () => {
+      ttsService.setApiKey(apiKey);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    };
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 p-4">
+        <div className="max-w-md mx-auto">
+          <button onClick={() => setScreen('home')} className="text-white/80 mb-6">← Back</button>
+          <h1 className="text-2xl font-bold text-white text-center mb-6">⚙️ Settings</h1>
+
+          <div className="bg-white rounded-2xl p-6 mb-4">
+            <h2 className="font-bold text-gray-800 mb-2">OpenAI API Key</h2>
+            <p className="text-gray-600 text-sm mb-4">
+              For high-quality voice pronunciation. Get your key from{' '}
+              <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                platform.openai.com
+              </a>
+            </p>
+
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="sk-..."
+              className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 font-mono text-sm"
+            />
+
+            <button
+              onClick={handleSave}
+              className={`w-full py-3 rounded-lg font-bold text-white ${saved ? 'bg-green-500' : 'bg-blue-500'} active:scale-98`}
+            >
+              {saved ? '✓ Saved!' : 'Save API Key'}
+            </button>
+
+            {ttsService.hasApiKey() && (
+              <div className="mt-3 p-3 bg-green-50 rounded-lg">
+                <p className="text-green-700 text-sm font-semibold">✓ OpenAI TTS Active</p>
+                <p className="text-green-600 text-xs mt-1">Using "nova" voice at 0.85 speed</p>
+              </div>
+            )}
+
+            {!ttsService.hasApiKey() && (
+              <div className="mt-3 p-3 bg-yellow-50 rounded-lg">
+                <p className="text-yellow-700 text-sm font-semibold">ℹ️ Using Browser Voice</p>
+                <p className="text-yellow-600 text-xs mt-1">Add API key for better quality</p>
+              </div>
+            )}
+          </div>
+
+          <div className="bg-white rounded-2xl p-6">
+            <h2 className="font-bold text-gray-800 mb-2">Audio Cache</h2>
+            <p className="text-gray-600 text-sm mb-3">
+              Clear cached audio files to free up space or regenerate pronunciations.
+            </p>
+            <button
+              onClick={() => {
+                ttsService.clearCache();
+                alert('Audio cache cleared!');
+              }}
+              className="w-full py-3 rounded-lg font-bold text-red-600 bg-red-50 active:scale-98"
+            >
+              Clear Audio Cache
+            </button>
+          </div>
         </div>
       </div>
     );
