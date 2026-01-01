@@ -527,7 +527,11 @@ export default function App() {
   }
 
   if (screen === 'settings') {
-    return <SettingsScreen ttsService={ttsService} onBack={() => setScreen('home')} />;
+    return <SettingsScreen ttsService={ttsService} onBack={() => setScreen('home')} onOpenDashboard={() => setScreen('dashboard')} />;
+  }
+
+  if (screen === 'dashboard') {
+    return <ParentDashboard gameData={gameData} onBack={() => setScreen('settings')} />;
   }
 
   if (screen === 'test' && currentWord) {
@@ -745,7 +749,7 @@ export default function App() {
 }
 
 // Settings component (separate to avoid useState rules violation)
-function SettingsScreen({ ttsService, onBack }) {
+function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
   const [apiKey, setApiKey] = useState(ttsService.getApiKey() || '');
   const [saved, setSaved] = useState(false);
 
@@ -762,6 +766,13 @@ function SettingsScreen({ ttsService, onBack }) {
         <h1 className="text-2xl font-bold text-white text-center mb-6">⚙️ Settings</h1>
 
         <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="font-bold text-gray-800 mb-4">📊 Parent Dashboard</h2>
+          <button onClick={onOpenDashboard} className="w-full py-3 rounded-lg font-bold text-white bg-purple-600 active:scale-98">
+            View Detailed Report
+          </button>
+        </div>
+
+        <div className="bg-white rounded-2xl p-6 mb-4">
           <h2 className="font-bold text-gray-800 mb-2">OpenAI API Key</h2>
           <p className="text-gray-600 text-sm mb-4">For high-quality voice. Get key from platform.openai.com</p>
           <input type="password" value={apiKey} onChange={(e) => setApiKey(e.target.value)} placeholder="sk-..." className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 font-mono text-sm" />
@@ -775,6 +786,208 @@ function SettingsScreen({ ttsService, onBack }) {
           <h2 className="font-bold text-gray-800 mb-2">Audio Cache</h2>
           <button onClick={() => { ttsService.clearCache(); alert('Cache cleared!'); }} className="w-full py-3 rounded-lg font-bold text-red-600 bg-red-50 active:scale-98">Clear Audio Cache</button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// Parent Dashboard component
+function ParentDashboard({ gameData, onBack }) {
+  const { testHistory, wordStats, coins, totalCoinsEarned, streak, bestStreak, earnedBadges } = gameData;
+
+  // Calculate problem words (< 50% success rate, min 2 attempts)
+  const problemWords = Object.entries(wordStats)
+    .map(([wordId, stats]) => {
+      const word = allWords.find(w => w.id === parseInt(wordId));
+      const successRate = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
+      return { word, stats, successRate };
+    })
+    .filter(w => w.word && w.stats.attempts >= 2 && w.successRate < 50)
+    .sort((a, b) => a.successRate - b.successRate);
+
+  // Words that need practice (< 75% success rate)
+  const needsPractice = Object.entries(wordStats)
+    .map(([wordId, stats]) => {
+      const word = allWords.find(w => w.id === parseInt(wordId));
+      const successRate = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
+      return { word, stats, successRate };
+    })
+    .filter(w => w.word && w.stats.attempts >= 2 && w.successRate >= 50 && w.successRate < 75)
+    .sort((a, b) => a.successRate - b.successRate);
+
+  // Weekly stats
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+  const recentTests = testHistory.filter(t => new Date(t.date) >= weekAgo);
+  const weeklyTests = recentTests.length;
+  const weeklyCorrect = recentTests.reduce((sum, t) => sum + t.score, 0);
+  const weeklyTotal = recentTests.reduce((sum, t) => sum + t.total, 0);
+  const weeklyAccuracy = weeklyTotal > 0 ? Math.round((weeklyCorrect / weeklyTotal) * 100) : 0;
+
+  // Category performance
+  const catData = {};
+  testHistory.forEach(test => {
+    test.words?.forEach(w => {
+      if (!catData[w.category]) catData[w.category] = { correct: 0, total: 0 };
+      catData[w.category].total++;
+      if (w.correct) catData[w.category].correct++;
+    });
+  });
+  const categoryStats = Object.entries(catData).map(([cat, data]) => ({
+    category: cat,
+    name: categoryNames[cat] || cat,
+    pct: Math.round((data.correct / data.total) * 100),
+    correct: data.correct,
+    total: data.total
+  })).sort((a, b) => a.pct - b.pct);
+
+  // Export data as CSV
+  const exportData = () => {
+    let csv = 'Test Date,Score,Total,Accuracy\n';
+    testHistory.forEach(t => {
+      csv += `${t.date},${t.score},${t.total},${Math.round((t.score/t.total)*100)}%\n`;
+    });
+    csv += '\n\nWord,Category,Attempts,Correct,Success Rate\n';
+    Object.entries(wordStats).forEach(([wordId, stats]) => {
+      const word = allWords.find(w => w.id === parseInt(wordId));
+      if (word) {
+        const rate = Math.round((stats.correct / stats.attempts) * 100);
+        csv += `${word.word},${word.category},${stats.attempts},${stats.correct},${rate}%\n`;
+      }
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alba-spelling-report-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-purple-600 to-indigo-700 p-4">
+      <div className="max-w-2xl mx-auto">
+        <button onClick={onBack} className="text-white/80 mb-4">← Back</button>
+        <h1 className="text-3xl font-bold text-white text-center mb-6">📊 Parent Dashboard</h1>
+
+        {/* Weekly Summary */}
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📅 This Week</h2>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-3xl font-bold text-purple-600">{weeklyTests}</p>
+              <p className="text-gray-600 text-sm">Tests Taken</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-purple-600">{weeklyAccuracy}%</p>
+              <p className="text-gray-600 text-sm">Accuracy</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-purple-600">{recentTests.reduce((sum, t) => {
+                const pct = (t.score / t.total) * 100;
+                return sum + t.words.filter(w => w.correct).length * 2 + (pct === 100 ? 50 : pct >= 80 ? 25 : pct >= 60 ? 10 : 5);
+              }, 0)}</p>
+              <p className="text-gray-600 text-sm">Coins Earned</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Problem Words */}
+        {problemWords.length > 0 && (
+          <div className="bg-white rounded-2xl p-6 mb-4">
+            <h2 className="text-xl font-bold text-red-600 mb-4">🚨 Problem Words ({"<"}50%)</h2>
+            <div className="space-y-2">
+              {problemWords.slice(0, 10).map((item, i) => (
+                <div key={i} className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                  <div>
+                    <p className="font-bold text-gray-800">{item.word.word}</p>
+                    <p className="text-xs text-gray-500">{item.stats.attempts} attempts • {item.stats.correct} correct</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-red-600">{item.successRate}%</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Needs Practice */}
+        {needsPractice.length > 0 && (
+          <div className="bg-white rounded-2xl p-6 mb-4">
+            <h2 className="text-xl font-bold text-yellow-600 mb-4">⚠️ Needs Practice (50-75%)</h2>
+            <div className="space-y-2">
+              {needsPractice.slice(0, 10).map((item, i) => (
+                <div key={i} className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                  <div>
+                    <p className="font-bold text-gray-800">{item.word.word}</p>
+                    <p className="text-xs text-gray-500">{item.stats.attempts} attempts • {item.stats.correct} correct</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-yellow-600">{item.successRate}%</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Category Performance */}
+        {categoryStats.length > 0 && (
+          <div className="bg-white rounded-2xl p-6 mb-4">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">📚 Category Performance</h2>
+            <div className="space-y-3">
+              {categoryStats.map((cat, i) => (
+                <div key={i}>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-semibold text-gray-700">{cat.name}</span>
+                    <span className={`font-bold ${cat.pct < 50 ? 'text-red-600' : cat.pct < 75 ? 'text-yellow-600' : 'text-green-600'}`}>
+                      {cat.pct}% ({cat.correct}/{cat.total})
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      className={`h-3 rounded-full ${cat.pct < 50 ? 'bg-red-500' : cat.pct < 75 ? 'bg-yellow-500' : 'bg-green-500'}`}
+                      style={{ width: `${cat.pct}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Overall Stats */}
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📈 All Time Stats</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <p className="text-3xl font-bold text-purple-600">{testHistory.length}</p>
+              <p className="text-gray-600 text-sm">Total Tests</p>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <p className="text-3xl font-bold text-purple-600">{Object.keys(wordStats).length}</p>
+              <p className="text-gray-600 text-sm">Words Attempted</p>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <p className="text-3xl font-bold text-purple-600">{bestStreak}</p>
+              <p className="text-gray-600 text-sm">Best Streak</p>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <p className="text-3xl font-bold text-purple-600">{totalCoinsEarned}</p>
+              <p className="text-gray-600 text-sm">Total Coins</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Export Button */}
+        <button
+          onClick={exportData}
+          className="w-full py-4 rounded-lg font-bold text-white bg-green-600 active:scale-98 mb-4"
+        >
+          📥 Export Data (CSV)
+        </button>
       </div>
     </div>
   );
