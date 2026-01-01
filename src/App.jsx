@@ -1028,23 +1028,31 @@ function ParentDashboard({ gameData, onBack }) {
   }
 
   // Calculate problem words (< 50% success rate, min 2 attempts)
+  // NOTE: Handle old data by creating placeholder words if ID doesn't match
   const problemWords = Object.entries(wordStats)
     .map(([wordId, stats]) => {
-      const word = allWords.find(w => w.id === parseInt(wordId));
+      let word = allWords.find(w => w.id === parseInt(wordId));
+      // If word not found (old data), create placeholder
+      if (!word) {
+        word = { id: wordId, word: `Word #${wordId}`, category: 'unknown', difficulty: 'medium' };
+      }
       const successRate = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
       return { word, stats, successRate };
     })
-    .filter(w => w.word && w.stats.attempts >= 2 && w.successRate < 50)
+    .filter(w => w.stats.attempts >= 2 && w.successRate < 50)
     .sort((a, b) => a.successRate - b.successRate);
 
   // Words that need practice (< 75% success rate)
   const needsPractice = Object.entries(wordStats)
     .map(([wordId, stats]) => {
-      const word = allWords.find(w => w.id === parseInt(wordId));
+      let word = allWords.find(w => w.id === parseInt(wordId));
+      if (!word) {
+        word = { id: wordId, word: `Word #${wordId}`, category: 'unknown', difficulty: 'medium' };
+      }
       const successRate = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
       return { word, stats, successRate };
     })
-    .filter(w => w.word && w.stats.attempts >= 2 && w.successRate >= 50 && w.successRate < 75)
+    .filter(w => w.stats.attempts >= 2 && w.successRate >= 50 && w.successRate < 75)
     .sort((a, b) => a.successRate - b.successRate);
 
   // Weekly stats
@@ -1072,6 +1080,19 @@ function ParentDashboard({ gameData, onBack }) {
     correct: data.correct,
     total: data.total
   })).sort((a, b) => a.pct - b.pct);
+
+  // Check if there's any data mismatch (old word IDs)
+  const hasMismatchedData = Object.keys(wordStats).some(wordId => {
+    return !allWords.find(w => w.id === parseInt(wordId));
+  });
+
+  const clearAllData = () => {
+    if (confirm('This will delete ALL progress data (tests, coins, badges). Are you sure?')) {
+      localStorage.removeItem('alba_spelling_data');
+      alert('All data cleared. Refresh the page.');
+      window.location.reload();
+    }
+  };
 
   // Export data as CSV
   const exportData = () => {
@@ -1102,6 +1123,24 @@ function ParentDashboard({ gameData, onBack }) {
       <div className="max-w-2xl mx-auto">
         <button onClick={onBack} className="text-white/80 mb-4">← Back</button>
         <h1 className="text-3xl font-bold text-white text-center mb-6">📊 Parent Dashboard</h1>
+
+        {/* Data Mismatch Warning */}
+        {hasMismatchedData && (
+          <div className="bg-yellow-100 border-2 border-yellow-500 rounded-2xl p-6 mb-4">
+            <h2 className="text-xl font-bold text-yellow-800 mb-2">⚠️ Old Data Detected</h2>
+            <p className="text-yellow-700 mb-4">
+              Some word IDs from previous tests don't match the new word list.
+              Stats will show as "Word #XX". You can continue using the app,
+              or clear all data to start fresh.
+            </p>
+            <button
+              onClick={clearAllData}
+              className="w-full py-3 rounded-lg font-bold text-white bg-red-600 active:scale-98"
+            >
+              🗑️ Clear All Data & Start Fresh
+            </button>
+          </div>
+        )}
 
         {/* Weekly Summary */}
         <div className="bg-white rounded-2xl p-6 mb-4">
