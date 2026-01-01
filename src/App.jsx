@@ -186,81 +186,113 @@ const allWords = [
 ];
 
 const sampleRewards = [
-  // Quick wins (100-300 coins) - Easy to earn!
+  // ========== QUICK WINS (100-350 coins) - Weekly treats ==========
   { id: 1, name: 'Stay Up 15 Mins Late', cost: 100, icon: '🌙' },
   { id: 2, name: 'Pick a Snack', cost: 150, icon: '🍿' },
   { id: 3, name: 'No Chores Pass', cost: 200, icon: '🎫' },
   { id: 4, name: 'Extra Dessert', cost: 250, icon: '🧁' },
   { id: 5, name: 'Lie In (30 mins)', cost: 300, icon: '😴' },
+  { id: 6, name: 'Stay Up 30 Mins Late', cost: 350, icon: '🌜' },
 
-  // Treats (400-900 coins)
-  { id: 6, name: 'Boba Tea', cost: 400, icon: '🧋' },
-  { id: 7, name: 'Pick Movie Night', cost: 450, icon: '🎬' },
-  { id: 8, name: '30 Mins Screen Time', cost: 500, icon: '📱' },
-  { id: 9, name: 'Hot Chocolate & Marshmallows', cost: 550, icon: '☕' },
-  { id: 10, name: 'Ice Cream Trip', cost: 600, icon: '🍦' },
-  { id: 11, name: 'Breakfast in Bed', cost: 700, icon: '🥞' },
-  { id: 12, name: 'Pick Dinner', cost: 800, icon: '🍕' },
-  { id: 13, name: 'Games Night (Your Rules)', cost: 900, icon: '🎮' },
+  // ========== TREATS (400-1000 coins) - Bi-weekly goals ==========
+  { id: 7, name: 'Boba Tea', cost: 400, icon: '🧋' },
+  { id: 8, name: 'Pick Movie Night', cost: 450, icon: '🎬' },
+  { id: 9, name: '30 Mins Screen Time', cost: 500, icon: '📱' },
+  { id: 10, name: 'Hot Chocolate Trip', cost: 550, icon: '☕' },
+  { id: 11, name: 'Ice Cream Trip', cost: 600, icon: '🍦' },
+  { id: 12, name: 'Milkshake Trip', cost: 650, icon: '🥤' },
+  { id: 13, name: 'Breakfast in Bed', cost: 700, icon: '🥞' },
+  { id: 14, name: 'Pick Dinner', cost: 800, icon: '🍕' },
+  { id: 15, name: 'Games Night (Your Rules)', cost: 900, icon: '🎮' },
+  { id: 16, name: '1 Hour Screen Time', cost: 1000, icon: '📺' },
 
-  // Big rewards (1000-2000 coins)
-  { id: 14, name: 'New Book', cost: 1000, icon: '📚' },
-  { id: 15, name: '1 Hour Screen Time', cost: 1100, icon: '📺' },
-  { id: 16, name: 'Cinema Trip', cost: 1200, icon: '🎥' },
-  { id: 17, name: 'Baking Day Together', cost: 1300, icon: '🧁' },
-  { id: 18, name: 'Craft Supplies', cost: 1400, icon: '🎨' },
-  { id: 19, name: 'Friend Playdate', cost: 1500, icon: '👯' },
-  { id: 20, name: 'Takeaway Night', cost: 1600, icon: '🥡' },
-  { id: 21, name: 'Skip a Homework', cost: 1800, icon: '📝' },
-  { id: 22, name: 'Day Out', cost: 2000, icon: '🎢' },
+  // ========== BIG REWARDS (1200-2500 coins) - Monthly goals ==========
+  { id: 17, name: 'New Book', cost: 1200, icon: '📚' },
+  { id: 18, name: 'Cinema Trip', cost: 1400, icon: '🎥' },
+  { id: 19, name: 'Baking Day Together', cost: 1500, icon: '🧁' },
+  { id: 20, name: 'Craft Supplies', cost: 1600, icon: '🎨' },
+  { id: 21, name: 'Friend Playdate', cost: 1800, icon: '👯' },
+  { id: 22, name: 'Takeaway Night', cost: 2000, icon: '🥡' },
+  { id: 23, name: 'Skip a Homework', cost: 2200, icon: '📝' },
+  { id: 24, name: 'Day Out (Local)', cost: 2500, icon: '🎡' },
 
-  // Epic rewards (2500-4000 coins)
-  { id: 23, name: 'Friend Sleepover', cost: 2500, icon: '🛏️' },
-  { id: 24, name: 'Shopping Trip', cost: 3000, icon: '🛍️' },
-  { id: 25, name: 'Choose a New Game', cost: 3500, icon: '🎲' },
-  { id: 26, name: 'Special Day Out', cost: 4000, icon: '✨' },
+  // ========== EPIC REWARDS (3000-5000 coins) - Term goals ==========
+  { id: 25, name: 'Friend Sleepover', cost: 3000, icon: '🛏️' },
+  { id: 26, name: 'Shopping Trip', cost: 3500, icon: '🛍️' },
+  { id: 27, name: 'Choose a New Game', cost: 4000, icon: '🎲' },
+  { id: 28, name: 'Theme Park Day', cost: 4500, icon: '🎢' },
+  { id: 29, name: 'Special Day Out', cost: 5000, icon: '✨' },
 
-  // Legendary rewards (5000+ coins)
-  { id: 27, name: 'Big Surprise', cost: 5000, icon: '🎁' },
-  { id: 28, name: 'Adventure Day', cost: 6000, icon: '🗺️' },
-  { id: 29, name: 'Ultimate Reward', cost: 10000, icon: '🏆' },
+  // ========== LEGENDARY (6000-10000 coins) - Half-year goals ==========
+  { id: 30, name: 'Big Surprise', cost: 6000, icon: '🎁' },
+  { id: 31, name: 'Adventure Day', cost: 7000, icon: '🗺️' },
+  { id: 32, name: 'Concert/Show Tickets', cost: 8000, icon: '🎤' },
+  { id: 33, name: 'Spa Day', cost: 9000, icon: '💅' },
+  { id: 34, name: 'Ultimate Day Out', cost: 10000, icon: '🌟' },
+
+  // ========== MYTHIC (12000-25000 coins) - Year goals ==========
+  { id: 35, name: 'Redecorate Room', cost: 12000, icon: '🛋️' },
+  { id: 36, name: 'New Gadget', cost: 15000, icon: '📱' },
+  { id: 37, name: 'Weekend Trip', cost: 18000, icon: '🏨' },
+  { id: 38, name: 'Birthday Party Upgrade', cost: 20000, icon: '🎂' },
+  { id: 39, name: 'Year Champion Prize', cost: 25000, icon: '🏆' },
 ];
 
 const badges = [
-  // Getting started
+  // ========== GETTING STARTED ==========
   { id: 'first', name: 'First Steps', icon: '👣', desc: 'Complete your first test' },
-  { id: 'perfect', name: 'Perfect 10', icon: '⭐', desc: 'Get 100% on a test' },
+  { id: 'perfect', name: 'Perfect Score', icon: '⭐', desc: 'Get 100% on a test' },
   { id: 'perfect3', name: 'Hat Trick', icon: '🎩', desc: '3 perfect scores' },
   { id: 'perfect5', name: 'High Five', icon: '🖐️', desc: '5 perfect scores' },
   { id: 'perfect10', name: 'Perfect Ten', icon: '💯', desc: '10 perfect scores' },
+  { id: 'perfect25', name: 'Quarter Century', icon: '🎯', desc: '25 perfect scores' },
+  { id: 'perfect50', name: 'Half Century', icon: '🏹', desc: '50 perfect scores' },
+  { id: 'perfect100', name: 'Centurion', icon: '🦅', desc: '100 perfect scores' },
 
-  // Streaks
+  // ========== STREAKS ==========
   { id: 'streak3', name: 'Streak Starter', icon: '🔥', desc: '3-day streak' },
-  { id: 'streak7', name: 'Week Warrior', icon: '💪', desc: '7-day streak' },
+  { id: 'streak7', name: 'Week Warrior', icon: '💪', desc: '1-week streak' },
   { id: 'streak14', name: 'Fortnight Fighter', icon: '⚔️', desc: '2-week streak' },
-  { id: 'streak21', name: 'Triple Week Titan', icon: '🏆', desc: '3-week streak' },
+  { id: 'streak21', name: 'Triple Week', icon: '🏆', desc: '3-week streak' },
   { id: 'streak28', name: 'Month Master', icon: '👑', desc: '4-week streak' },
-  { id: 'streak60', name: 'Legendary', icon: '🌟', desc: '60-day streak' },
+  { id: 'streak45', name: 'Six Week Star', icon: '⭐', desc: '45-day streak' },
+  { id: 'streak60', name: 'Two Month Hero', icon: '🦸', desc: '60-day streak' },
+  { id: 'streak90', name: 'Quarter Year', icon: '🌙', desc: '90-day streak' },
+  { id: 'streak120', name: 'Four Month Legend', icon: '🔮', desc: '120-day streak' },
+  { id: 'streak180', name: 'Half Year Hero', icon: '🌟', desc: '180-day streak' },
+  { id: 'streak270', name: 'Nine Month Master', icon: '💫', desc: '270-day streak' },
+  { id: 'streak365', name: 'YEAR CHAMPION', icon: '👸', desc: '365-day streak!' },
 
-  // Coin milestones
+  // ========== COIN MILESTONES ==========
   { id: 'century', name: 'Century Club', icon: '💰', desc: 'Earn 100 coins' },
   { id: 'coins500', name: 'Coin Collector', icon: '💎', desc: 'Earn 500 coins' },
-  { id: 'coins1000', name: 'Treasure Hunter', icon: '🏴‍☠️', desc: 'Earn 1000 coins' },
-  { id: 'coins2500', name: 'Money Bags', icon: '💵', desc: 'Earn 2500 coins' },
-  { id: 'coins5000', name: 'Gold Rush', icon: '🥇', desc: 'Earn 5000 coins' },
-  { id: 'coins10000', name: 'Millionaire', icon: '🤑', desc: 'Earn 10000 coins' },
+  { id: 'coins1000', name: 'Treasure Hunter', icon: '🏴‍☠️', desc: 'Earn 1,000 coins' },
+  { id: 'coins2500', name: 'Money Bags', icon: '💵', desc: 'Earn 2,500 coins' },
+  { id: 'coins5000', name: 'Gold Rush', icon: '🥇', desc: 'Earn 5,000 coins' },
+  { id: 'coins10000', name: 'Ten Thousand', icon: '🤑', desc: 'Earn 10,000 coins' },
+  { id: 'coins15000', name: 'Fortune Finder', icon: '💸', desc: 'Earn 15,000 coins' },
+  { id: 'coins20000', name: 'Mega Rich', icon: '🏦', desc: 'Earn 20,000 coins' },
+  { id: 'coins25000', name: 'COIN QUEEN', icon: '👑', desc: 'Earn 25,000 coins!' },
 
-  // Test milestones
-  { id: 'tests10', name: 'Practice Pro', icon: '📚', desc: '10 tests' },
-  { id: 'tests25', name: 'Spelling Star', icon: '🌟', desc: '25 tests' },
-  { id: 'tests50', name: 'Word Wizard', icon: '🧙', desc: '50 tests' },
-  { id: 'tests100', name: 'Spelling Champion', icon: '🏅', desc: '100 tests' },
-  { id: 'tests200', name: 'Grandmaster', icon: '👨‍🎓', desc: '200 tests' },
+  // ========== TEST MILESTONES ==========
+  { id: 'tests10', name: 'Getting Started', icon: '📚', desc: '10 tests' },
+  { id: 'tests25', name: 'Committed', icon: '📖', desc: '25 tests' },
+  { id: 'tests50', name: 'Dedicated', icon: '🧙', desc: '50 tests' },
+  { id: 'tests100', name: 'Century', icon: '🏅', desc: '100 tests' },
+  { id: 'tests150', name: 'Unstoppable', icon: '🚀', desc: '150 tests' },
+  { id: 'tests200', name: 'Super Speller', icon: '⚡', desc: '200 tests' },
+  { id: 'tests250', name: 'Elite', icon: '🎖️', desc: '250 tests' },
+  { id: 'tests300', name: 'Legendary', icon: '👨‍🎓', desc: '300 tests' },
+  { id: 'tests365', name: 'YEAR OF SPELLING', icon: '📅', desc: '365 tests!' },
 
-  // Category mastery
+  // ========== CATEGORY MASTERY ==========
   { id: 'master_tricky', name: 'Tricky Master', icon: '🎭', desc: '90% on tricky words' },
   { id: 'master_silent', name: 'Silent Hero', icon: '🤫', desc: '90% on silent letters' },
+  { id: 'master_double', name: 'Double Trouble', icon: '✌️', desc: '90% on double letters' },
+  { id: 'master_endings', name: 'Ending Expert', icon: '🔚', desc: '90% on word endings' },
+  { id: 'master_homophones', name: 'Sound Alike Pro', icon: '👂', desc: '90% on homophones' },
   { id: 'allrounder', name: 'All-Rounder', icon: '🌈', desc: '75%+ in all categories' },
+  { id: 'perfectionist', name: 'Perfectionist', icon: '💎', desc: '90%+ in all categories' },
 ];
 
 const categoryNames = {
@@ -578,37 +610,53 @@ export default function App() {
     const newBadges = [];
     const perfectTests = data.testHistory.filter(t => t.score === t.total).length;
 
-    // Getting started
+    // Getting started - Perfect scores
     if (!data.earnedBadges.includes('first') && data.testHistory.length >= 1) newBadges.push('first');
     if (!data.earnedBadges.includes('perfect') && perfectTests >= 1) newBadges.push('perfect');
     if (!data.earnedBadges.includes('perfect3') && perfectTests >= 3) newBadges.push('perfect3');
     if (!data.earnedBadges.includes('perfect5') && perfectTests >= 5) newBadges.push('perfect5');
     if (!data.earnedBadges.includes('perfect10') && perfectTests >= 10) newBadges.push('perfect10');
+    if (!data.earnedBadges.includes('perfect25') && perfectTests >= 25) newBadges.push('perfect25');
+    if (!data.earnedBadges.includes('perfect50') && perfectTests >= 50) newBadges.push('perfect50');
+    if (!data.earnedBadges.includes('perfect100') && perfectTests >= 100) newBadges.push('perfect100');
 
-    // Streaks
+    // Streaks (up to full year!)
     if (!data.earnedBadges.includes('streak3') && data.streak >= 3) newBadges.push('streak3');
     if (!data.earnedBadges.includes('streak7') && data.streak >= 7) newBadges.push('streak7');
     if (!data.earnedBadges.includes('streak14') && data.streak >= 14) newBadges.push('streak14');
     if (!data.earnedBadges.includes('streak21') && data.streak >= 21) newBadges.push('streak21');
     if (!data.earnedBadges.includes('streak28') && data.streak >= 28) newBadges.push('streak28');
+    if (!data.earnedBadges.includes('streak45') && data.streak >= 45) newBadges.push('streak45');
     if (!data.earnedBadges.includes('streak60') && data.streak >= 60) newBadges.push('streak60');
+    if (!data.earnedBadges.includes('streak90') && data.streak >= 90) newBadges.push('streak90');
+    if (!data.earnedBadges.includes('streak120') && data.streak >= 120) newBadges.push('streak120');
+    if (!data.earnedBadges.includes('streak180') && data.streak >= 180) newBadges.push('streak180');
+    if (!data.earnedBadges.includes('streak270') && data.streak >= 270) newBadges.push('streak270');
+    if (!data.earnedBadges.includes('streak365') && data.streak >= 365) newBadges.push('streak365');
 
-    // Coin milestones
+    // Coin milestones (up to 25k for year-long economy)
     if (!data.earnedBadges.includes('century') && data.totalCoinsEarned >= 100) newBadges.push('century');
     if (!data.earnedBadges.includes('coins500') && data.totalCoinsEarned >= 500) newBadges.push('coins500');
     if (!data.earnedBadges.includes('coins1000') && data.totalCoinsEarned >= 1000) newBadges.push('coins1000');
     if (!data.earnedBadges.includes('coins2500') && data.totalCoinsEarned >= 2500) newBadges.push('coins2500');
     if (!data.earnedBadges.includes('coins5000') && data.totalCoinsEarned >= 5000) newBadges.push('coins5000');
     if (!data.earnedBadges.includes('coins10000') && data.totalCoinsEarned >= 10000) newBadges.push('coins10000');
+    if (!data.earnedBadges.includes('coins15000') && data.totalCoinsEarned >= 15000) newBadges.push('coins15000');
+    if (!data.earnedBadges.includes('coins20000') && data.totalCoinsEarned >= 20000) newBadges.push('coins20000');
+    if (!data.earnedBadges.includes('coins25000') && data.totalCoinsEarned >= 25000) newBadges.push('coins25000');
 
-    // Test milestones
+    // Test milestones (up to 365 for full year)
     if (!data.earnedBadges.includes('tests10') && data.testHistory.length >= 10) newBadges.push('tests10');
     if (!data.earnedBadges.includes('tests25') && data.testHistory.length >= 25) newBadges.push('tests25');
     if (!data.earnedBadges.includes('tests50') && data.testHistory.length >= 50) newBadges.push('tests50');
     if (!data.earnedBadges.includes('tests100') && data.testHistory.length >= 100) newBadges.push('tests100');
+    if (!data.earnedBadges.includes('tests150') && data.testHistory.length >= 150) newBadges.push('tests150');
     if (!data.earnedBadges.includes('tests200') && data.testHistory.length >= 200) newBadges.push('tests200');
+    if (!data.earnedBadges.includes('tests250') && data.testHistory.length >= 250) newBadges.push('tests250');
+    if (!data.earnedBadges.includes('tests300') && data.testHistory.length >= 300) newBadges.push('tests300');
+    if (!data.earnedBadges.includes('tests365') && data.testHistory.length >= 365) newBadges.push('tests365');
 
-    // Category mastery (check if 90%+ in specific categories)
+    // Category mastery (check if 90%+ in specific categories with 10+ attempts)
     const catStats = {};
     data.testHistory.forEach(test => {
       test.words?.forEach(w => {
@@ -620,6 +668,14 @@ export default function App() {
     const getCatPct = (cat) => catStats[cat] && catStats[cat].total >= 10 ? (catStats[cat].correct / catStats[cat].total) * 100 : 0;
     if (!data.earnedBadges.includes('master_tricky') && getCatPct('tricky') >= 90) newBadges.push('master_tricky');
     if (!data.earnedBadges.includes('master_silent') && getCatPct('silent-letters') >= 90) newBadges.push('master_silent');
+    if (!data.earnedBadges.includes('master_double') && getCatPct('double-letters') >= 90) newBadges.push('master_double');
+    if (!data.earnedBadges.includes('master_endings') && getCatPct('endings') >= 90) newBadges.push('master_endings');
+    if (!data.earnedBadges.includes('master_homophones') && getCatPct('homophones') >= 90) newBadges.push('master_homophones');
+
+    // Perfectionist: 95%+ in all categories with at least 10 attempts each
+    const perfCats = Object.keys(catStats).filter(c => catStats[c].total >= 10);
+    const allAbove95 = perfCats.length >= 8 && perfCats.every(c => (catStats[c].correct / catStats[c].total) >= 0.95);
+    if (!data.earnedBadges.includes('perfectionist') && allAbove95) newBadges.push('perfectionist');
 
     // All-rounder: 75%+ in all categories with at least 5 attempts each
     const allCats = Object.keys(catStats).filter(c => catStats[c].total >= 5);
@@ -657,14 +713,14 @@ export default function App() {
     const word = testWords[currentIndex];
     const correct = input.toLowerCase().trim() === word.word.toLowerCase();
 
-    // Hot streak multiplier: 1st = 2 coins, 2nd = 4 coins, 3rd+ = 6 coins
+    // Hot streak multiplier: 1st = 1 coin, 2nd = 2 coins, 3rd+ = 3 coins (reduced for year-long economy)
     let earned = 0;
     let newStreak = hotStreak;
     if (correct) {
       newStreak = hotStreak + 1;
-      if (newStreak === 1) earned = 2;
-      else if (newStreak === 2) earned = 4;
-      else earned = 6; // 3+ streak
+      if (newStreak === 1) earned = 1;
+      else if (newStreak === 2) earned = 2;
+      else earned = 3; // 3+ streak
       setHotStreak(newStreak);
     } else {
       setHotStreak(0); // Reset streak on wrong answer
@@ -677,7 +733,7 @@ export default function App() {
       console.log('✅ Results now:', updated.length, 'items');
       return updated;
     });
-    setShowResult({ correct, word: word.word, streak: newStreak });
+    setShowResult({ correct, word: word.word, attempt: input.toLowerCase().trim(), streak: newStreak });
     if (earned > 0) {
       setCoinAnim(earned);
       setTimeout(() => setCoinAnim(null), 1600);
@@ -690,10 +746,11 @@ export default function App() {
     const allResults = [...results];
     const correctCount = allResults.filter(r => r.correct).length;
     const pct = (correctCount / testWords.length) * 100;
-    let bonus = 5;
-    if (pct === 100) bonus = 50;
-    else if (pct >= 80) bonus = 25;
-    else if (pct >= 60) bonus = 10;
+    // Completion bonus (reduced for year-long economy)
+    let bonus = 2;
+    if (pct === 100) bonus = 20;
+    else if (pct >= 80) bonus = 10;
+    else if (pct >= 60) bonus = 5;
 
     const totalEarned = allResults.reduce((a, r) => a + r.coins, 0) + bonus;
     const today = new Date().toDateString();
@@ -919,8 +976,8 @@ export default function App() {
                 <p className={`text-center font-bold ${showResult.correct ? 'text-green-700' : 'text-red-700'}`}>
                   {showResult.correct ? (
                     <>
-                      ✓ Correct! +{showResult.streak === 1 ? 2 : showResult.streak === 2 ? 4 : 6} 🪙
-                      {showResult.streak >= 2 && <span className="block text-sm mt-1">🔥 {showResult.streak} in a row! {showResult.streak === 2 ? '2x' : '3x'} bonus!</span>}
+                      ✓ Correct! +{showResult.streak === 1 ? 1 : showResult.streak === 2 ? 2 : 3} 🪙
+                      {showResult.streak >= 2 && <span className="block text-sm mt-1">🔥 {showResult.streak} in a row! Streak bonus!</span>}
                     </>
                   ) : `✗ It's spelled: ${showResult.word}`}
                 </p>
@@ -1696,6 +1753,88 @@ function ParentDashboard({ gameData, onBack }) {
             </button>
           </div>
         )}
+
+        {/* Performance vs Benchmarks */}
+        {testHistory.length > 0 && (() => {
+          const totalWords = Object.keys(wordStats).length;
+          const masteredWords = Object.values(wordStats).filter(s => s.attempts >= 3 && (s.correct / s.attempts) >= 0.8).length;
+          const overallAccuracy = testHistory.length > 0
+            ? Math.round((testHistory.reduce((sum, t) => sum + t.score, 0) / testHistory.reduce((sum, t) => sum + t.total, 0)) * 100)
+            : 0;
+
+          // Year 5 (10-year-old) benchmarks
+          const benchmarks = {
+            accuracy: 70, // 70%+ expected
+            weeklyTests: 2, // 2+ tests per week
+            masteredWords: 80, // 80+ words mastered
+            categoryMin: 70 // 70%+ in each category
+          };
+
+          const accuracyStatus = overallAccuracy >= benchmarks.accuracy ? 'on-track' : overallAccuracy >= benchmarks.accuracy - 10 ? 'needs-work' : 'behind';
+          const testFreqStatus = weeklyTests >= benchmarks.weeklyTests ? 'on-track' : weeklyTests >= 1 ? 'needs-work' : 'behind';
+          const masteryStatus = masteredWords >= benchmarks.masteredWords ? 'on-track' : masteredWords >= benchmarks.masteredWords * 0.7 ? 'needs-work' : 'behind';
+
+          const weakCategories = categoryStats.filter(c => c.pct < benchmarks.categoryMin);
+          const overallStatus = (accuracyStatus === 'on-track' && testFreqStatus === 'on-track' && masteryStatus === 'on-track') ? 'on-track'
+            : (accuracyStatus === 'behind' || masteryStatus === 'behind') ? 'behind' : 'needs-work';
+
+          const statusConfig = {
+            'on-track': { icon: '✅', color: 'green', label: 'On Track', bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-500' },
+            'needs-work': { icon: '⚠️', color: 'yellow', label: 'Needs Work', bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-500' },
+            'behind': { icon: '🚨', color: 'red', label: 'Behind', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-500' }
+          };
+
+          const status = statusConfig[overallStatus];
+
+          return (
+            <div className={`rounded-2xl p-6 mb-4 border-2 ${status.bg} ${status.border}`}>
+              <h2 className="text-xl font-bold text-gray-800 mb-2">{status.icon} Progress vs. Average 10-Year-Old</h2>
+              <p className={`font-bold mb-4 ${status.text}`}>Overall Status: {status.label}</p>
+
+              <div className="space-y-3 mb-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">Accuracy: {overallAccuracy}%</span>
+                  <span className={`font-bold ${statusConfig[accuracyStatus].text}`}>
+                    {accuracyStatus === 'on-track' ? '✅ Great!' : accuracyStatus === 'needs-work' ? '⚠️ Keep practicing' : '🚨 Needs focus'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">Practice frequency: {weeklyTests} tests/week</span>
+                  <span className={`font-bold ${statusConfig[testFreqStatus].text}`}>
+                    {testFreqStatus === 'on-track' ? '✅ Excellent!' : testFreqStatus === 'needs-work' ? '⚠️ Try 2-3/week' : '🚨 More practice needed'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">Words mastered: {masteredWords}/{totalWords}</span>
+                  <span className={`font-bold ${statusConfig[masteryStatus].text}`}>
+                    {masteryStatus === 'on-track' ? '✅ Brilliant!' : masteryStatus === 'needs-work' ? '⚠️ Good progress' : '🚨 Keep going'}
+                  </span>
+                </div>
+              </div>
+
+              {weakCategories.length > 0 && (
+                <div className="bg-white rounded-lg p-4 mt-4">
+                  <p className="font-bold text-gray-800 mb-2">📚 Focus Areas:</p>
+                  <ul className="space-y-1">
+                    {weakCategories.slice(0, 3).map((cat, i) => (
+                      <li key={i} className="text-sm text-gray-700">• {cat.name} ({cat.pct}% - needs to reach 70%+)</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {overallStatus === 'on-track' && (
+                <p className="text-green-700 font-semibold mt-4">🌟 Alba is performing at or above expected levels for her age!</p>
+              )}
+              {overallStatus === 'needs-work' && (
+                <p className="text-yellow-700 font-semibold mt-4">💪 With a bit more practice, Alba will be right on track!</p>
+              )}
+              {overallStatus === 'behind' && (
+                <p className="text-red-700 font-semibold mt-4">📖 More regular practice will help Alba catch up. Try 2-3 tests per week focusing on weak categories.</p>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Weekly Summary */}
         <div className="bg-white rounded-2xl p-6 mb-4">
