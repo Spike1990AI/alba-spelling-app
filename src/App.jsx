@@ -9,30 +9,92 @@ const allWords = [
   { id: 3, word: 'could', sentence: 'Maybe I can help.', category: 'tricky', difficulty: 'easy' },
   { id: 4, word: 'would', sentence: 'I wish you had come.', category: 'tricky', difficulty: 'easy' },
   { id: 5, word: 'should', sentence: 'You ought to try it.', category: 'tricky', difficulty: 'easy' },
+  { id: 26, word: 'people', sentence: 'Many humans were there.', category: 'tricky', difficulty: 'medium' },
+  { id: 27, word: 'answer', sentence: 'Can you reply to this?', category: 'tricky', difficulty: 'medium' },
+  { id: 28, word: 'busy', sentence: 'I have lots to do.', category: 'tricky', difficulty: 'easy' },
+  { id: 29, word: 'beautiful', sentence: 'The view was lovely.', category: 'tricky', difficulty: 'hard' },
+  { id: 30, word: 'again', sentence: 'Do it once more.', category: 'tricky', difficulty: 'easy' },
+
   // I before E
   { id: 6, word: 'friend', sentence: "She's my best pal.", category: 'i-before-e', difficulty: 'easy' },
   { id: 7, word: 'believe', sentence: 'I think it will work out.', category: 'i-before-e', difficulty: 'medium' },
   { id: 8, word: 'receive', sentence: 'Did you get my message?', category: 'i-before-e', difficulty: 'hard' },
   { id: 9, word: 'piece', sentence: 'Can I have a slice?', category: 'i-before-e', difficulty: 'medium' },
   { id: 10, word: 'achieve', sentence: 'You can reach your goals.', category: 'i-before-e', difficulty: 'hard' },
+  { id: 31, word: 'weird', sentence: 'That was very strange.', category: 'i-before-e', difficulty: 'medium' },
+  { id: 32, word: 'neighbour', sentence: 'The person next door.', category: 'i-before-e', difficulty: 'hard' },
+  { id: 33, word: 'either', sentence: 'Pick one or the other.', category: 'i-before-e', difficulty: 'medium' },
+
   // Soft C
   { id: 11, word: 'decide', sentence: "I can't choose what to wear.", category: 'soft-c', difficulty: 'medium' },
   { id: 12, word: 'certain', sentence: "I'm absolutely sure about it.", category: 'soft-c', difficulty: 'hard' },
   { id: 13, word: 'accident', sentence: 'The crash happened this morning.', category: 'soft-c', difficulty: 'hard' },
   { id: 14, word: 'circle', sentence: 'Draw a round shape.', category: 'soft-c', difficulty: 'medium' },
   { id: 15, word: 'celebrate', sentence: "Let's have a party!", category: 'soft-c', difficulty: 'hard' },
+  { id: 34, word: 'necessary', sentence: 'You need to do this.', category: 'soft-c', difficulty: 'hard' },
+  { id: 35, word: 'ceiling', sentence: 'Look up at the top.', category: 'soft-c', difficulty: 'medium' },
+  { id: 36, word: 'notice', sentence: 'Did you spot it?', category: 'soft-c', difficulty: 'medium' },
+
   // Double letters
   { id: 16, word: 'different', sentence: 'This one is not the same.', category: 'double-letters', difficulty: 'medium' },
   { id: 17, word: 'beginning', sentence: 'This is just the start.', category: 'double-letters', difficulty: 'hard' },
   { id: 18, word: 'running', sentence: 'She was moving fast.', category: 'double-letters', difficulty: 'easy' },
   { id: 19, word: 'swimming', sentence: 'I love the pool.', category: 'double-letters', difficulty: 'medium' },
   { id: 20, word: 'happened', sentence: 'It occurred yesterday.', category: 'double-letters', difficulty: 'medium' },
+  { id: 37, word: 'accommodation', sentence: 'We need a place to stay.', category: 'double-letters', difficulty: 'hard' },
+  { id: 38, word: 'embarrass', sentence: "Don't make me feel awkward.", category: 'double-letters', difficulty: 'hard' },
+  { id: 39, word: 'committee', sentence: 'The group made a choice.', category: 'double-letters', difficulty: 'hard' },
+  { id: 40, word: 'address', sentence: 'Where do you live?', category: 'double-letters', difficulty: 'medium' },
+  { id: 41, word: 'immediately', sentence: 'Do it right now.', category: 'double-letters', difficulty: 'hard' },
+
   // Silent letters
   { id: 21, word: 'knight', sentence: 'The warrior rode a horse.', category: 'silent-letters', difficulty: 'medium' },
   { id: 22, word: 'knife', sentence: 'Cut it with the blade.', category: 'silent-letters', difficulty: 'easy' },
   { id: 23, word: 'write', sentence: 'Put pen to paper.', category: 'silent-letters', difficulty: 'easy' },
   { id: 24, word: 'island', sentence: 'The land surrounded by water.', category: 'silent-letters', difficulty: 'medium' },
   { id: 25, word: 'castle', sentence: 'The king lived there.', category: 'silent-letters', difficulty: 'medium' },
+  { id: 42, word: 'rhythm', sentence: 'The beat of the music.', category: 'silent-letters', difficulty: 'hard' },
+  { id: 43, word: 'scissors', sentence: 'Use them to cut paper.', category: 'silent-letters', difficulty: 'medium' },
+  { id: 44, word: 'climb', sentence: 'Go up the ladder.', category: 'silent-letters', difficulty: 'easy' },
+  { id: 45, word: 'doubt', sentence: 'I am not sure.', category: 'silent-letters', difficulty: 'medium' },
+  { id: 46, word: 'listen', sentence: 'Pay attention to this.', category: 'silent-letters', difficulty: 'easy' },
+
+  // Endings (-tion, -sion, -ous)
+  { id: 47, word: 'station', sentence: 'Wait at the platform.', category: 'endings', difficulty: 'medium' },
+  { id: 48, word: 'mention', sentence: 'Did you talk about it?', category: 'endings', difficulty: 'medium' },
+  { id: 49, word: 'question', sentence: 'Can I ask something?', category: 'endings', difficulty: 'medium' },
+  { id: 50, word: 'direction', sentence: 'Which way should I go?', category: 'endings', difficulty: 'hard' },
+  { id: 51, word: 'decision', sentence: 'What did you pick?', category: 'endings', difficulty: 'hard' },
+  { id: 52, word: 'famous', sentence: 'Everyone knows them.', category: 'endings', difficulty: 'medium' },
+  { id: 53, word: 'dangerous', sentence: 'This is not safe.', category: 'endings', difficulty: 'hard' },
+  { id: 54, word: 'serious', sentence: 'This is very important.', category: 'endings', difficulty: 'hard' },
+
+  // Homophones
+  { id: 55, word: 'their', sentence: 'It belongs to them.', category: 'homophones', difficulty: 'medium' },
+  { id: 56, word: 'there', sentence: 'Look over in that place.', category: 'homophones', difficulty: 'medium' },
+  { id: 57, word: 'hear', sentence: 'Use your ears to listen.', category: 'homophones', difficulty: 'easy' },
+  { id: 58, word: 'here', sentence: 'Come to this spot.', category: 'homophones', difficulty: 'easy' },
+  { id: 59, word: 'where', sentence: 'In what place?', category: 'homophones', difficulty: 'easy' },
+  { id: 60, word: 'wear', sentence: 'Put on your clothes.', category: 'homophones', difficulty: 'easy' },
+
+  // Hard spellings
+  { id: 61, word: 'definitely', sentence: 'I am totally sure.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 62, word: 'separate', sentence: 'Keep them apart.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 63, word: 'government', sentence: 'The leaders of our country.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 64, word: 'recommend', sentence: 'I suggest you try this.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 65, word: 'queue', sentence: 'Wait in the line.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 66, word: 'conscience', sentence: 'Knowing right from wrong.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 67, word: 'mischievous', sentence: 'Being a bit naughty.', category: 'hard-spellings', difficulty: 'hard' },
+  { id: 68, word: 'restaurant', sentence: 'A place to eat meals.', category: 'hard-spellings', difficulty: 'hard' },
+
+  // More common words
+  { id: 69, word: 'enough', sentence: 'I have plenty now.', category: 'tricky', difficulty: 'medium' },
+  { id: 70, word: 'through', sentence: 'Go from one side to the other.', category: 'tricky', difficulty: 'hard' },
+  { id: 71, word: 'thought', sentence: 'I had an idea.', category: 'tricky', difficulty: 'medium' },
+  { id: 72, word: 'brought', sentence: 'I carried it here.', category: 'tricky', difficulty: 'medium' },
+  { id: 73, word: 'caught', sentence: 'I grabbed the ball.', category: 'tricky', difficulty: 'medium' },
+  { id: 74, word: 'taught', sentence: 'Someone showed me how.', category: 'tricky', difficulty: 'medium' },
+  { id: 75, word: 'special', sentence: 'This is really important.', category: 'soft-c', difficulty: 'medium' },
 ];
 
 const sampleRewards = [
@@ -56,7 +118,10 @@ const categoryNames = {
   'i-before-e': 'I Before E',
   'soft-c': 'Soft C Words',
   'double-letters': 'Double Letters',
-  'silent-letters': 'Silent Letters'
+  'silent-letters': 'Silent Letters',
+  'endings': 'Word Endings',
+  'homophones': 'Sound-Alike Words',
+  'hard-spellings': 'Challenge Words'
 };
 
 // ============ STORAGE HELPERS ============
