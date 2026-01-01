@@ -697,6 +697,25 @@ export default function App() {
   }
 
   if (screen === 'results') {
+    // Handle empty results (shouldn't happen but safety check)
+    if (!results || results.length === 0) {
+      return (
+        <div className="min-h-screen bg-gradient-to-b from-red-500 to-orange-600 p-4 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 text-center max-w-md">
+            <p className="text-6xl mb-4">⚠️</p>
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">No Results Found</h1>
+            <p className="text-gray-600 mb-6">
+              Something went wrong. No test results were recorded.
+              This might be a bug - please try taking the test again.
+            </p>
+            <button onClick={() => setScreen('home')} className="w-full bg-red-600 text-white rounded-xl p-4 font-bold">
+              Back to Home
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     const correctCount = results.filter(r => r.correct).length;
     const pct = results.length > 0 ? (correctCount / results.length) * 100 : 0;
     const totalEarned = results.reduce((a, r) => a + r.coins, 0) + (pct === 100 ? 50 : pct >= 80 ? 25 : pct >= 60 ? 10 : 5);
