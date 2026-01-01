@@ -1,8 +1,8 @@
 // OpenAI Text-to-Speech Service
 // Uses OpenAI TTS API with caching and fallback to browser speech
 
-const VOICE = 'nova'; // Options: 'nova', 'shimmer', 'alloy', 'echo', 'fable', 'onyx'
-const SPEED = 0.85; // Slightly slower for clarity
+const VOICE = 'shimmer'; // Options: 'nova', 'shimmer', 'alloy', 'echo', 'fable', 'onyx'
+const SPEED = 0.75; // Slower for maximum clarity
 const CACHE_KEY_PREFIX = 'tts_audio_';
 
 class TTSService {
