@@ -447,7 +447,13 @@ export default function App() {
     const word = testWords[currentIndex];
     const correct = input.toLowerCase().trim() === word.word.toLowerCase();
     const earned = correct ? 2 : 0;
-    setResults(prev => [...prev, { word: word.word, wordId: word.id, attempt: input, correct, coins: earned, category: word.category }]);
+    const newResult = { word: word.word, wordId: word.id, attempt: input, correct, coins: earned, category: word.category };
+    console.log('📝 Saving result:', newResult);
+    setResults(prev => {
+      const updated = [...prev, newResult];
+      console.log('✅ Results now:', updated.length, 'items');
+      return updated;
+    });
     setShowResult({ correct, word: word.word });
     if (earned > 0) {
       setCoinAnim(earned);
@@ -456,6 +462,8 @@ export default function App() {
   };
 
   const finishTest = () => {
+    console.log('🏁 Finishing test. Results array has:', results.length, 'items');
+    console.log('📊 Full results:', results);
     const allResults = [...results];
     const correctCount = allResults.filter(r => r.correct).length;
     const pct = (correctCount / testWords.length) * 100;
