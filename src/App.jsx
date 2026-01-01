@@ -969,6 +969,35 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
     setTimeout(() => setGithubSaved(false), 2000);
   };
 
+  const loadFromCloud = async () => {
+    const token = localStorage.getItem('github_token');
+    const gistId = localStorage.getItem('gist_id');
+
+    if (!token || !gistId) {
+      alert('No cloud backup configured yet. Take a test first to create backup.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+        headers: { 'Authorization': `token ${token}` }
+      });
+
+      if (response.ok) {
+        const gist = await response.json();
+        const content = gist.files['alba-spelling-data.json'].content;
+        const data = JSON.parse(content);
+        localStorage.setItem('alba_spelling_data', JSON.stringify(data));
+        alert('✅ Loaded latest data from cloud! Refresh the page.');
+        window.location.reload();
+      } else {
+        alert('Failed to load from cloud. Check your token.');
+      }
+    } catch (error) {
+      alert('Error loading from cloud: ' + error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 p-4">
       <div className="max-w-md mx-auto">
@@ -1011,20 +1040,25 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
             placeholder="ghp_..."
             className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 font-mono text-sm"
           />
-          <button onClick={handleGithubSave} className={`w-full py-3 rounded-lg font-bold text-white ${githubSaved ? 'bg-green-500' : 'bg-purple-600'} active:scale-98`}>
+          <button onClick={handleGithubSave} className={`w-full py-3 rounded-lg font-bold text-white ${githubSaved ? 'bg-green-500' : 'bg-purple-600'} active:scale-98 mb-2`}>
             {githubSaved ? '✓ Cloud Backup Active!' : 'Enable Cloud Backup'}
           </button>
           {localStorage.getItem('gist_id') && (
-            <div className="mt-3 p-3 bg-green-50 rounded-lg">
-              <p className="text-green-700 text-sm font-semibold mb-2">✓ Syncing to GitHub</p>
-              <a
-                href={`https://gist.github.com/${localStorage.getItem('gist_id')}`}
-                target="_blank"
-                className="text-blue-600 text-xs underline"
-              >
-                View backup on GitHub →
-              </a>
-            </div>
+            <>
+              <button onClick={loadFromCloud} className="w-full py-3 rounded-lg font-bold text-purple-600 bg-purple-50 active:scale-98 mb-3">
+                📥 Load Latest from Cloud
+              </button>
+              <div className="p-3 bg-green-50 rounded-lg">
+                <p className="text-green-700 text-sm font-semibold mb-2">✓ Syncing to GitHub</p>
+                <a
+                  href={`https://gist.github.com/${localStorage.getItem('gist_id')}`}
+                  target="_blank"
+                  className="text-blue-600 text-xs underline"
+                >
+                  View backup on GitHub →
+                </a>
+              </div>
+            </>
           )}
         </div>
 
