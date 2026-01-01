@@ -186,10 +186,23 @@ const allWords = [
 ];
 
 const sampleRewards = [
-  { id: 1, name: 'Pick Movie Night', cost: 100, icon: '🎬' },
-  { id: 2, name: '30 Mins Extra Screen Time', cost: 200, icon: '📱' },
-  { id: 3, name: 'Ice Cream Trip', cost: 500, icon: '🍦' },
-  { id: 4, name: 'Day Out', cost: 1000, icon: '🎢' },
+  // Quick wins (50-100 coins)
+  { id: 1, name: 'Stay Up 15 Mins Late', cost: 50, icon: '🌙' },
+  { id: 2, name: 'Pick a Snack', cost: 75, icon: '🍿' },
+  { id: 3, name: 'No Chores Pass', cost: 100, icon: '🎫' },
+
+  // Treats (150-300 coins)
+  { id: 4, name: 'Boba Tea', cost: 150, icon: '🧋' },
+  { id: 5, name: 'Pick Movie Night', cost: 150, icon: '🎬' },
+  { id: 6, name: '30 Mins Screen Time', cost: 200, icon: '📱' },
+  { id: 7, name: 'Ice Cream', cost: 250, icon: '🍦' },
+  { id: 8, name: 'Breakfast in Bed', cost: 300, icon: '🥞' },
+
+  // Big rewards (500+ coins)
+  { id: 9, name: 'Friend Sleepover', cost: 500, icon: '🛏️' },
+  { id: 10, name: 'New Book', cost: 600, icon: '📚' },
+  { id: 11, name: 'Day Out', cost: 1000, icon: '🎢' },
+  { id: 12, name: 'Shopping Trip', cost: 1500, icon: '🛍️' },
 ];
 
 const badges = [
