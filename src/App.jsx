@@ -186,32 +186,81 @@ const allWords = [
 ];
 
 const sampleRewards = [
-  // Quick wins (50-100 coins)
-  { id: 1, name: 'Stay Up 15 Mins Late', cost: 50, icon: '🌙' },
-  { id: 2, name: 'Pick a Snack', cost: 75, icon: '🍿' },
-  { id: 3, name: 'No Chores Pass', cost: 100, icon: '🎫' },
+  // Quick wins (100-300 coins) - Easy to earn!
+  { id: 1, name: 'Stay Up 15 Mins Late', cost: 100, icon: '🌙' },
+  { id: 2, name: 'Pick a Snack', cost: 150, icon: '🍿' },
+  { id: 3, name: 'No Chores Pass', cost: 200, icon: '🎫' },
+  { id: 4, name: 'Extra Dessert', cost: 250, icon: '🧁' },
+  { id: 5, name: 'Lie In (30 mins)', cost: 300, icon: '😴' },
 
-  // Treats (150-300 coins)
-  { id: 4, name: 'Boba Tea', cost: 150, icon: '🧋' },
-  { id: 5, name: 'Pick Movie Night', cost: 150, icon: '🎬' },
-  { id: 6, name: '30 Mins Screen Time', cost: 200, icon: '📱' },
-  { id: 7, name: 'Ice Cream', cost: 250, icon: '🍦' },
-  { id: 8, name: 'Breakfast in Bed', cost: 300, icon: '🥞' },
+  // Treats (400-900 coins)
+  { id: 6, name: 'Boba Tea', cost: 400, icon: '🧋' },
+  { id: 7, name: 'Pick Movie Night', cost: 450, icon: '🎬' },
+  { id: 8, name: '30 Mins Screen Time', cost: 500, icon: '📱' },
+  { id: 9, name: 'Hot Chocolate & Marshmallows', cost: 550, icon: '☕' },
+  { id: 10, name: 'Ice Cream Trip', cost: 600, icon: '🍦' },
+  { id: 11, name: 'Breakfast in Bed', cost: 700, icon: '🥞' },
+  { id: 12, name: 'Pick Dinner', cost: 800, icon: '🍕' },
+  { id: 13, name: 'Games Night (Your Rules)', cost: 900, icon: '🎮' },
 
-  // Big rewards (500+ coins)
-  { id: 9, name: 'Friend Sleepover', cost: 500, icon: '🛏️' },
-  { id: 10, name: 'New Book', cost: 600, icon: '📚' },
-  { id: 11, name: 'Day Out', cost: 1000, icon: '🎢' },
-  { id: 12, name: 'Shopping Trip', cost: 1500, icon: '🛍️' },
+  // Big rewards (1000-2000 coins)
+  { id: 14, name: 'New Book', cost: 1000, icon: '📚' },
+  { id: 15, name: '1 Hour Screen Time', cost: 1100, icon: '📺' },
+  { id: 16, name: 'Cinema Trip', cost: 1200, icon: '🎥' },
+  { id: 17, name: 'Baking Day Together', cost: 1300, icon: '🧁' },
+  { id: 18, name: 'Craft Supplies', cost: 1400, icon: '🎨' },
+  { id: 19, name: 'Friend Playdate', cost: 1500, icon: '👯' },
+  { id: 20, name: 'Takeaway Night', cost: 1600, icon: '🥡' },
+  { id: 21, name: 'Skip a Homework', cost: 1800, icon: '📝' },
+  { id: 22, name: 'Day Out', cost: 2000, icon: '🎢' },
+
+  // Epic rewards (2500-4000 coins)
+  { id: 23, name: 'Friend Sleepover', cost: 2500, icon: '🛏️' },
+  { id: 24, name: 'Shopping Trip', cost: 3000, icon: '🛍️' },
+  { id: 25, name: 'Choose a New Game', cost: 3500, icon: '🎲' },
+  { id: 26, name: 'Special Day Out', cost: 4000, icon: '✨' },
+
+  // Legendary rewards (5000+ coins)
+  { id: 27, name: 'Big Surprise', cost: 5000, icon: '🎁' },
+  { id: 28, name: 'Adventure Day', cost: 6000, icon: '🗺️' },
+  { id: 29, name: 'Ultimate Reward', cost: 10000, icon: '🏆' },
 ];
 
 const badges = [
+  // Getting started
   { id: 'first', name: 'First Steps', icon: '👣', desc: 'Complete your first test' },
   { id: 'perfect', name: 'Perfect 10', icon: '⭐', desc: 'Get 100% on a test' },
+  { id: 'perfect3', name: 'Hat Trick', icon: '🎩', desc: '3 perfect scores' },
+  { id: 'perfect5', name: 'High Five', icon: '🖐️', desc: '5 perfect scores' },
+  { id: 'perfect10', name: 'Perfect Ten', icon: '💯', desc: '10 perfect scores' },
+
+  // Streaks
   { id: 'streak3', name: 'Streak Starter', icon: '🔥', desc: '3-day streak' },
   { id: 'streak7', name: 'Week Warrior', icon: '💪', desc: '7-day streak' },
-  { id: 'century', name: 'Century Club', icon: '💰', desc: 'Earn 100 total coins' },
-  { id: 'tests10', name: 'Practice Pro', icon: '📚', desc: 'Complete 10 tests' },
+  { id: 'streak14', name: 'Fortnight Fighter', icon: '⚔️', desc: '2-week streak' },
+  { id: 'streak21', name: 'Triple Week Titan', icon: '🏆', desc: '3-week streak' },
+  { id: 'streak28', name: 'Month Master', icon: '👑', desc: '4-week streak' },
+  { id: 'streak60', name: 'Legendary', icon: '🌟', desc: '60-day streak' },
+
+  // Coin milestones
+  { id: 'century', name: 'Century Club', icon: '💰', desc: 'Earn 100 coins' },
+  { id: 'coins500', name: 'Coin Collector', icon: '💎', desc: 'Earn 500 coins' },
+  { id: 'coins1000', name: 'Treasure Hunter', icon: '🏴‍☠️', desc: 'Earn 1000 coins' },
+  { id: 'coins2500', name: 'Money Bags', icon: '💵', desc: 'Earn 2500 coins' },
+  { id: 'coins5000', name: 'Gold Rush', icon: '🥇', desc: 'Earn 5000 coins' },
+  { id: 'coins10000', name: 'Millionaire', icon: '🤑', desc: 'Earn 10000 coins' },
+
+  // Test milestones
+  { id: 'tests10', name: 'Practice Pro', icon: '📚', desc: '10 tests' },
+  { id: 'tests25', name: 'Spelling Star', icon: '🌟', desc: '25 tests' },
+  { id: 'tests50', name: 'Word Wizard', icon: '🧙', desc: '50 tests' },
+  { id: 'tests100', name: 'Spelling Champion', icon: '🏅', desc: '100 tests' },
+  { id: 'tests200', name: 'Grandmaster', icon: '👨‍🎓', desc: '200 tests' },
+
+  // Category mastery
+  { id: 'master_tricky', name: 'Tricky Master', icon: '🎭', desc: '90% on tricky words' },
+  { id: 'master_silent', name: 'Silent Hero', icon: '🤫', desc: '90% on silent letters' },
+  { id: 'allrounder', name: 'All-Rounder', icon: '🌈', desc: '75%+ in all categories' },
 ];
 
 const categoryNames = {
@@ -250,55 +299,63 @@ const loadData = () => {
   return getDefaultData();
 };
 
+// Debounce timer for cloud sync
+let syncTimeout = null;
+
 const saveData = (data) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    // Also save to GitHub Gist if token exists
-    syncToGist(data);
+
+    // Debounced background sync (wait 2 seconds, then sync in background)
+    if (syncTimeout) clearTimeout(syncTimeout);
+    syncTimeout = setTimeout(() => {
+      syncToGist(data);
+    }, 2000);
   }
   catch (e) { console.error('Failed to save:', e); }
 };
 
-// Sync data to GitHub Gist
-const syncToGist = async (data) => {
+// Sync data to GitHub Gist (non-blocking)
+const syncToGist = (data) => {
   const token = localStorage.getItem('github_token');
-  if (!token) return; // Skip if no token configured
+  if (!token) return;
 
   const gistId = localStorage.getItem('gist_id');
   const content = JSON.stringify(data, null, 2);
 
-  try {
-    const url = gistId
-      ? `https://api.github.com/gists/${gistId}`
-      : 'https://api.github.com/gists';
+  const url = gistId
+    ? `https://api.github.com/gists/${gistId}`
+    : 'https://api.github.com/gists';
 
-    const method = gistId ? 'PATCH' : 'POST';
+  const method = gistId ? 'PATCH' : 'POST';
 
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        description: 'Alba Spelling Test Data - Auto-synced',
-        public: false,
-        files: {
-          'alba-spelling-data.json': {
-            content
-          }
+  // Non-blocking background sync
+  fetch(url, {
+    method,
+    headers: {
+      'Authorization': `token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      description: 'Alba Spelling Test Data - Auto-synced',
+      public: false,
+      files: {
+        'alba-spelling-data.json': {
+          content
         }
-      })
-    });
-
+      }
+    })
+  })
+  .then(async (response) => {
     if (response.ok) {
       const gist = await response.json();
       localStorage.setItem('gist_id', gist.id);
-      console.log('✅ Synced to Gist:', gist.html_url);
+      console.log('✅ Synced to cloud');
     }
-  } catch (error) {
-    console.warn('GitHub sync failed:', error);
-  }
+  })
+  .catch((error) => {
+    console.warn('Sync failed:', error);
+  });
 };
 
 // ============ SMART WORD SELECTION ============
@@ -446,6 +503,7 @@ export default function App() {
   const [coinAnim, setCoinAnim] = useState(null);
   const [speaking, setSpeaking] = useState(false);
   const [newBadge, setNewBadge] = useState(null);
+  const [hotStreak, setHotStreak] = useState(0);
 
   // Persist on change
   useEffect(() => { saveData(gameData); }, [gameData]);
@@ -464,17 +522,109 @@ export default function App() {
     }
   }, []);
 
+  // Auto-load from cloud on startup
+  useEffect(() => {
+    const autoSync = async () => {
+      const token = localStorage.getItem('github_token');
+      if (!token) return;
+
+      try {
+        const res = await fetch('https://api.github.com/gists', { headers: { 'Authorization': `token ${token}` } });
+        if (!res.ok) return;
+
+        const gists = await res.json();
+        const albaGists = gists.filter(g => g.files['alba-spelling-data.json']);
+        if (albaGists.length === 0) return;
+
+        // Fetch ALL Gists to check their data
+        const gistDataPromises = albaGists.map(async (g) => {
+          const r = await fetch(`https://api.github.com/gists/${g.id}`, { headers: { 'Authorization': `token ${token}` } });
+          if (!r.ok) return null;
+          const full = await r.json();
+          const data = JSON.parse(full.files['alba-spelling-data.json'].content);
+          return { id: g.id, coins: data.totalCoinsEarned || 0 };
+        });
+        const gistData = (await Promise.all(gistDataPromises)).filter(Boolean);
+
+        // Pick the one with the MOST coins (Alba's, not empty one)
+        const best = gistData.sort((a, b) => b.coins - a.coins)[0];
+        if (!best || best.coins === 0) return;
+
+        const latest = albaGists.find(g => g.id === best.id);
+        const gistRes = await fetch(`https://api.github.com/gists/${latest.id}`, { headers: { 'Authorization': `token ${token}` } });
+        if (!gistRes.ok) return;
+
+        const gist = await gistRes.json();
+        const cloudData = JSON.parse(gist.files['alba-spelling-data.json'].content);
+
+        // Load cloud data if it has more coins
+        if (cloudData.totalCoinsEarned > gameData.totalCoinsEarned) {
+          localStorage.setItem('alba_spelling_data', JSON.stringify(cloudData));
+          localStorage.setItem('gist_id', latest.id);
+          setGameData(cloudData);
+        }
+      } catch (e) {
+        console.error('Auto-sync failed:', e);
+      }
+    };
+
+    autoSync();
+  }, []); // Run once on mount
+
   const { coins, streak, earnedBadges, totalCoinsEarned, bestStreak, testHistory, claimedRewards, wordStats } = gameData;
 
   // Badge checking
   const checkBadges = (data) => {
     const newBadges = [];
+    const perfectTests = data.testHistory.filter(t => t.score === t.total).length;
+
+    // Getting started
     if (!data.earnedBadges.includes('first') && data.testHistory.length >= 1) newBadges.push('first');
-    if (!data.earnedBadges.includes('perfect') && data.testHistory.some(t => t.score === t.total)) newBadges.push('perfect');
+    if (!data.earnedBadges.includes('perfect') && perfectTests >= 1) newBadges.push('perfect');
+    if (!data.earnedBadges.includes('perfect3') && perfectTests >= 3) newBadges.push('perfect3');
+    if (!data.earnedBadges.includes('perfect5') && perfectTests >= 5) newBadges.push('perfect5');
+    if (!data.earnedBadges.includes('perfect10') && perfectTests >= 10) newBadges.push('perfect10');
+
+    // Streaks
     if (!data.earnedBadges.includes('streak3') && data.streak >= 3) newBadges.push('streak3');
     if (!data.earnedBadges.includes('streak7') && data.streak >= 7) newBadges.push('streak7');
+    if (!data.earnedBadges.includes('streak14') && data.streak >= 14) newBadges.push('streak14');
+    if (!data.earnedBadges.includes('streak21') && data.streak >= 21) newBadges.push('streak21');
+    if (!data.earnedBadges.includes('streak28') && data.streak >= 28) newBadges.push('streak28');
+    if (!data.earnedBadges.includes('streak60') && data.streak >= 60) newBadges.push('streak60');
+
+    // Coin milestones
     if (!data.earnedBadges.includes('century') && data.totalCoinsEarned >= 100) newBadges.push('century');
+    if (!data.earnedBadges.includes('coins500') && data.totalCoinsEarned >= 500) newBadges.push('coins500');
+    if (!data.earnedBadges.includes('coins1000') && data.totalCoinsEarned >= 1000) newBadges.push('coins1000');
+    if (!data.earnedBadges.includes('coins2500') && data.totalCoinsEarned >= 2500) newBadges.push('coins2500');
+    if (!data.earnedBadges.includes('coins5000') && data.totalCoinsEarned >= 5000) newBadges.push('coins5000');
+    if (!data.earnedBadges.includes('coins10000') && data.totalCoinsEarned >= 10000) newBadges.push('coins10000');
+
+    // Test milestones
     if (!data.earnedBadges.includes('tests10') && data.testHistory.length >= 10) newBadges.push('tests10');
+    if (!data.earnedBadges.includes('tests25') && data.testHistory.length >= 25) newBadges.push('tests25');
+    if (!data.earnedBadges.includes('tests50') && data.testHistory.length >= 50) newBadges.push('tests50');
+    if (!data.earnedBadges.includes('tests100') && data.testHistory.length >= 100) newBadges.push('tests100');
+    if (!data.earnedBadges.includes('tests200') && data.testHistory.length >= 200) newBadges.push('tests200');
+
+    // Category mastery (check if 90%+ in specific categories)
+    const catStats = {};
+    data.testHistory.forEach(test => {
+      test.words?.forEach(w => {
+        if (!catStats[w.category]) catStats[w.category] = { correct: 0, total: 0 };
+        catStats[w.category].total++;
+        if (w.correct) catStats[w.category].correct++;
+      });
+    });
+    const getCatPct = (cat) => catStats[cat] && catStats[cat].total >= 10 ? (catStats[cat].correct / catStats[cat].total) * 100 : 0;
+    if (!data.earnedBadges.includes('master_tricky') && getCatPct('tricky') >= 90) newBadges.push('master_tricky');
+    if (!data.earnedBadges.includes('master_silent') && getCatPct('silent-letters') >= 90) newBadges.push('master_silent');
+
+    // All-rounder: 75%+ in all categories with at least 5 attempts each
+    const allCats = Object.keys(catStats).filter(c => catStats[c].total >= 5);
+    const allAbove75 = allCats.length >= 5 && allCats.every(c => (catStats[c].correct / catStats[c].total) >= 0.75);
+    if (!data.earnedBadges.includes('allrounder') && allAbove75) newBadges.push('allrounder');
 
     if (newBadges.length > 0) {
       setNewBadge(badges.find(b => b.id === newBadges[0]));
@@ -495,6 +645,7 @@ export default function App() {
     setInput('');
     setResults([]);
     setShowResult(null);
+    setHotStreak(0);
     setScreen('test');
   };
 
@@ -505,7 +656,20 @@ export default function App() {
     if (input.trim() === '' || showResult !== null) return;
     const word = testWords[currentIndex];
     const correct = input.toLowerCase().trim() === word.word.toLowerCase();
-    const earned = correct ? 2 : 0;
+
+    // Hot streak multiplier: 1st = 2 coins, 2nd = 4 coins, 3rd+ = 6 coins
+    let earned = 0;
+    let newStreak = hotStreak;
+    if (correct) {
+      newStreak = hotStreak + 1;
+      if (newStreak === 1) earned = 2;
+      else if (newStreak === 2) earned = 4;
+      else earned = 6; // 3+ streak
+      setHotStreak(newStreak);
+    } else {
+      setHotStreak(0); // Reset streak on wrong answer
+    }
+
     const newResult = { word: word.word, wordId: word.id, attempt: input, correct, coins: earned, category: word.category };
     console.log('📝 Saving result:', newResult);
     setResults(prev => {
@@ -513,7 +677,7 @@ export default function App() {
       console.log('✅ Results now:', updated.length, 'items');
       return updated;
     });
-    setShowResult({ correct, word: word.word });
+    setShowResult({ correct, word: word.word, streak: newStreak });
     if (earned > 0) {
       setCoinAnim(earned);
       setTimeout(() => setCoinAnim(null), 1600);
@@ -717,16 +881,19 @@ export default function App() {
       <div className="min-h-screen bg-gradient-to-b from-blue-500 to-cyan-600 p-4 relative">
         {coinAnim && <CoinAnimation amount={coinAnim} />}
         <div className="max-w-md mx-auto">
-          {/* DEBUG INFO */}
-          <div className="bg-black/50 text-white text-xs p-2 rounded mb-2 font-mono">
-            Word {currentIndex + 1}/{testWords.length} | Saved: {results.length} results
-          </div>
-
           <div className="flex items-center justify-between mb-4">
             <button onClick={() => setScreen('home')} className="text-white/80 text-sm">✕ Quit</button>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🪙</span>
-              <span className="text-lg font-bold text-white">{coins}</span>
+            <div className="flex items-center gap-4">
+              {hotStreak >= 2 && (
+                <div className="flex items-center gap-1 bg-orange-500 px-3 py-1 rounded-full">
+                  <span className="text-lg">🔥</span>
+                  <span className="text-sm font-bold text-white">{hotStreak}x</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🪙</span>
+                <span className="text-lg font-bold text-white">{coins}</span>
+              </div>
             </div>
           </div>
 
@@ -736,7 +903,7 @@ export default function App() {
           <p className="text-white/80 text-center text-sm mb-4">Word {currentIndex + 1} of {testWords.length}</p>
 
           <div className="bg-white rounded-2xl p-6 shadow-lg mb-4">
-            <button onClick={() => speak(currentWord.word + '. ' + currentWord.sentence)} disabled={speaking} className="w-full bg-indigo-100 rounded-xl p-4 mb-4 flex items-center justify-center gap-2 active:bg-indigo-200">
+            <button onClick={() => speak(`${currentWord.word}. ${currentWord.sentence}. ${currentWord.word}.`)} disabled={speaking} className="w-full bg-indigo-100 rounded-xl p-4 mb-4 flex items-center justify-center gap-2 active:bg-indigo-200">
               <span className="text-2xl">{speaking ? '🔊' : '🔈'}</span>
               <span className="font-semibold text-indigo-700">Hear Word</span>
             </button>
@@ -750,7 +917,12 @@ export default function App() {
             {showResult !== null && (
               <div className={`rounded-xl p-4 mb-2 ${showResult.correct ? 'bg-green-100' : 'bg-red-100'}`}>
                 <p className={`text-center font-bold ${showResult.correct ? 'text-green-700' : 'text-red-700'}`}>
-                  {showResult.correct ? '✓ Correct! +2 🪙' : `✗ It's spelled: ${showResult.word}`}
+                  {showResult.correct ? (
+                    <>
+                      ✓ Correct! +{showResult.streak === 1 ? 2 : showResult.streak === 2 ? 4 : 6} 🪙
+                      {showResult.streak >= 2 && <span className="block text-sm mt-1">🔥 {showResult.streak} in a row! {showResult.streak === 2 ? '2x' : '3x'} bonus!</span>}
+                    </>
+                  ) : `✗ It's spelled: ${showResult.word}`}
                 </p>
               </div>
             )}
@@ -952,12 +1124,19 @@ export default function App() {
 
 // Settings component (separate to avoid useState rules violation)
 function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
+  const [pinVerified, setPinVerified] = useState(false);
   const [apiKey, setApiKey] = useState(ttsService.getApiKey() || '');
   const [saved, setSaved] = useState(false);
   const [newPin, setNewPin] = useState('');
   const [pinSaved, setPinSaved] = useState(false);
   const [githubToken, setGithubToken] = useState(localStorage.getItem('github_token') || '');
   const [githubSaved, setGithubSaved] = useState(false);
+  const [manualGistId, setManualGistId] = useState('');
+  const [gistIdSaved, setGistIdSaved] = useState(false);
+
+  if (!pinVerified) {
+    return <PinEntry onSuccess={() => setPinVerified(true)} onBack={onBack} />;
+  }
 
   const handleSave = () => {
     ttsService.setApiKey(apiKey);
@@ -982,12 +1161,213 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
     setTimeout(() => setGithubSaved(false), 2000);
   };
 
+  const deleteEmptyGists = async () => {
+    const token = localStorage.getItem('github_token');
+    if (!token) {
+      alert('Please add your GitHub token first!');
+      return;
+    }
+
+    if (!confirm('This will delete ALL Gists with 0 coins. Keep only Alba\'s data. Continue?')) {
+      return;
+    }
+
+    try {
+      const res = await fetch('https://api.github.com/gists', { headers: { 'Authorization': `token ${token}` } });
+      if (!res.ok) {
+        alert('Failed to fetch Gists.');
+        return;
+      }
+
+      const gists = await res.json();
+      const albaGists = gists.filter(g => g.files['alba-spelling-data.json']);
+
+      let deleted = 0;
+      for (const g of albaGists) {
+        const gistRes = await fetch(`https://api.github.com/gists/${g.id}`, { headers: { 'Authorization': `token ${token}` } });
+        if (gistRes.ok) {
+          const full = await gistRes.json();
+          const data = JSON.parse(full.files['alba-spelling-data.json'].content);
+
+          if ((data.totalCoinsEarned || 0) === 0) {
+            await fetch(`https://api.github.com/gists/${g.id}`, {
+              method: 'DELETE',
+              headers: { 'Authorization': `token ${token}` }
+            });
+            deleted++;
+          }
+        }
+      }
+
+      alert(`✅ Deleted ${deleted} empty Gist${deleted !== 1 ? 's' : ''}. Only Alba's data remains.`);
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  };
+
+  const syncNow = async () => {
+    const token = localStorage.getItem('github_token');
+    if (!token) {
+      alert('Please save your GitHub token first!');
+      return;
+    }
+
+    try {
+      // Get current data from localStorage
+      const currentData = localStorage.getItem('alba_spelling_data');
+      if (!currentData) {
+        alert('No data to sync yet!');
+        return;
+      }
+
+      const data = JSON.parse(currentData);
+      const gistId = localStorage.getItem('gist_id');
+      const content = JSON.stringify(data, null, 2);
+
+      const url = gistId
+        ? `https://api.github.com/gists/${gistId}`
+        : 'https://api.github.com/gists';
+
+      const method = gistId ? 'PATCH' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Authorization': `token ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          description: 'Alba Spelling Test Data - Manual Sync',
+          public: false,
+          files: {
+            'alba-spelling-data.json': { content }
+          }
+        })
+      });
+
+      if (response.ok) {
+        const gist = await response.json();
+        localStorage.setItem('gist_id', gist.id);
+        alert(`✅ Synced to cloud!\n\nCoins: ${data.coins}\nTests: ${data.tests?.length || 0}\n\nView at: ${gist.html_url}`);
+      } else {
+        alert('Failed to sync. Check your token.');
+      }
+    } catch (error) {
+      alert('Error syncing: ' + error.message);
+    }
+  };
+
+  const downloadFromGistId = async () => {
+    const token = localStorage.getItem('github_token');
+    if (!token) {
+      alert('Please add your GitHub token first!');
+      return;
+    }
+
+    if (!manualGistId) {
+      alert('Please enter the Gist ID from Alba\'s phone!');
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://api.github.com/gists/${manualGistId}`, {
+        headers: { 'Authorization': `token ${token}` }
+      });
+
+      if (!response.ok) {
+        alert('Failed to fetch Gist. Check the ID.');
+        return;
+      }
+
+      const gist = await response.json();
+
+      if (!gist.files || !gist.files['alba-spelling-data.json']) {
+        alert('Error: Gist does not contain alba-spelling-data.json');
+        return;
+      }
+
+      const content = gist.files['alba-spelling-data.json'].content;
+      const data = JSON.parse(content);
+
+      // Debug: Check what we actually got
+      console.log('Downloaded data:', {
+        coins: data.coins,
+        totalCoinsEarned: data.totalCoinsEarned,
+        testHistory: data.testHistory?.length,
+        tests: data.tests?.length
+      });
+
+      localStorage.setItem('alba_spelling_data', JSON.stringify(data));
+      localStorage.setItem('gist_id', manualGistId);
+
+      alert(`✅ Downloaded Alba's data!\n\nCoins: ${data.coins || 0}\nTotal Earned: ${data.totalCoinsEarned || 0}\nTests: ${data.testHistory?.length || 0}\n\nRefreshing now...`);
+      window.location.reload();
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  };
+
+  const findAndDownload = async () => {
+    const token = localStorage.getItem('github_token');
+    if (!token) {
+      alert('Please add your GitHub token first!');
+      return;
+    }
+
+    try {
+      // Search for Gists with alba-spelling-data
+      const listResponse = await fetch('https://api.github.com/gists', {
+        headers: { 'Authorization': `token ${token}` }
+      });
+
+      if (!listResponse.ok) {
+        alert('Failed to fetch Gists. Check your token.');
+        return;
+      }
+
+      const gists = await listResponse.json();
+      const albaGists = gists.filter(g => g.files['alba-spelling-data.json']);
+
+      if (albaGists.length === 0) {
+        alert('No Alba spelling data found. Has Alba taken a test yet?');
+        return;
+      }
+
+      // Check ALL Gists and pick the one with MOST coins (Alba's data, not empty)
+      const gistDataPromises = albaGists.map(async (g) => {
+        const r = await fetch(`https://api.github.com/gists/${g.id}`, { headers: { 'Authorization': `token ${token}` } });
+        if (!r.ok) return null;
+        const full = await r.json();
+        const data = JSON.parse(full.files['alba-spelling-data.json'].content);
+        return { id: g.id, coins: data.totalCoinsEarned || 0, data };
+      });
+      const gistData = (await Promise.all(gistDataPromises)).filter(Boolean);
+
+      // Pick the one with MOST coins
+      const best = gistData.sort((a, b) => b.coins - a.coins)[0];
+
+      console.log(`Found ${albaGists.length} Gists, using one with most coins: ${best.id} (${best.coins} coins)`);
+
+      // Use the data we already fetched
+      const data = best.data;
+
+      // Save to localStorage
+      localStorage.setItem('alba_spelling_data', JSON.stringify(data));
+      localStorage.setItem('gist_id', best.id);
+
+      alert(`✅ Found Alba's data!\n\nCoins: ${data.coins || 0}\nTotal Earned: ${data.totalCoinsEarned || 0}\nTests: ${data.testHistory?.length || 0}\n\nRefreshing now...`);
+      window.location.reload();
+    } catch (error) {
+      alert('Error finding data: ' + error.message);
+    }
+  };
+
   const loadFromCloud = async () => {
     const token = localStorage.getItem('github_token');
     const gistId = localStorage.getItem('gist_id');
 
     if (!token || !gistId) {
-      alert('No cloud backup configured yet. Take a test first to create backup.');
+      alert('No cloud backup configured yet. Use "Find Alba\'s Data" button.');
       return;
     }
 
@@ -1054,8 +1434,20 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
             className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 font-mono text-sm"
           />
           <button onClick={handleGithubSave} className={`w-full py-3 rounded-lg font-bold text-white ${githubSaved ? 'bg-green-500' : 'bg-purple-600'} active:scale-98 mb-2`}>
-            {githubSaved ? '✓ Cloud Backup Active!' : 'Enable Cloud Backup'}
+            {githubSaved ? '✓ Token Saved!' : 'Save Token'}
           </button>
+
+          {githubToken && (
+            <>
+              <button onClick={findAndDownload} className="w-full py-3 rounded-lg font-bold text-white bg-green-600 active:scale-98 mb-2">
+                📥 Download Alba's Data
+              </button>
+              <button onClick={deleteEmptyGists} className="w-full py-3 rounded-lg font-bold text-red-600 bg-red-50 active:scale-98 mb-2 text-sm">
+                🗑️ Delete Empty Gists
+              </button>
+            </>
+          )}
+
           {localStorage.getItem('gist_id') && (
             <>
               <button onClick={loadFromCloud} className="w-full py-3 rounded-lg font-bold text-purple-600 bg-purple-50 active:scale-98 mb-3">
@@ -1392,6 +1784,63 @@ function ParentDashboard({ gameData, onBack }) {
           </div>
         )}
 
+        {/* Coins & Streaks */}
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">💰 Coins & Streaks</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-yellow-50 rounded-lg">
+              <p className="text-3xl font-bold text-yellow-600">{coins}</p>
+              <p className="text-gray-600 text-sm">Current Coins</p>
+            </div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <p className="text-3xl font-bold text-purple-600">{totalCoinsEarned}</p>
+              <p className="text-gray-600 text-sm">Total Earned</p>
+            </div>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <p className="text-3xl font-bold text-orange-600">{streak}🔥</p>
+              <p className="text-gray-600 text-sm">Current Streak</p>
+            </div>
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <p className="text-3xl font-bold text-blue-600">{bestStreak}</p>
+              <p className="text-gray-600 text-sm">Best Streak</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Target */}
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">🎯 Weekly Target</h2>
+          <div className="bg-gray-200 rounded-full h-6 mb-2">
+            <div
+              className="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full h-6 transition-all flex items-center justify-end pr-2"
+              style={{ width: `${Math.min(100, Math.round((recentTests.reduce((sum, t) => sum + t.words.filter(w => w.correct).length * 2, 0) / 250) * 100))}%` }}
+            >
+              <span className="text-white text-xs font-bold">
+                {Math.min(100, Math.round((recentTests.reduce((sum, t) => sum + t.words.filter(w => w.correct).length * 2, 0) / 250) * 100))}%
+              </span>
+            </div>
+          </div>
+          <p className="text-gray-600 text-sm text-center">
+            {recentTests.reduce((sum, t) => sum + t.words.filter(w => w.correct).length * 2, 0)} / 250 coins this week
+          </p>
+        </div>
+
+        {/* Badges */}
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">🏆 Badges ({earnedBadges.length}/{badges.length})</h2>
+          <div className="grid grid-cols-4 gap-3">
+            {badges.map(b => {
+              const earned = earnedBadges.includes(b.id);
+              return (
+                <div key={b.id} className={`text-center p-3 bg-gray-50 rounded-lg ${!earned && 'opacity-30 grayscale'}`}>
+                  <span className="text-3xl">{b.icon}</span>
+                  <p className="text-xs font-bold mt-1 text-gray-700">{b.name}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Overall Stats */}
         <div className="bg-white rounded-2xl p-6 mb-4">
           <h2 className="text-xl font-bold text-gray-800 mb-4">📈 All Time Stats</h2>
@@ -1405,12 +1854,16 @@ function ParentDashboard({ gameData, onBack }) {
               <p className="text-gray-600 text-sm">Words Attempted</p>
             </div>
             <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <p className="text-3xl font-bold text-purple-600">{bestStreak}</p>
-              <p className="text-gray-600 text-sm">Best Streak</p>
+              <p className="text-3xl font-bold text-purple-600">
+                {Math.round((testHistory.reduce((sum, t) => sum + t.score, 0) / testHistory.reduce((sum, t) => sum + t.total, 0)) * 100) || 0}%
+              </p>
+              <p className="text-gray-600 text-sm">Overall Accuracy</p>
             </div>
             <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <p className="text-3xl font-bold text-purple-600">{totalCoinsEarned}</p>
-              <p className="text-gray-600 text-sm">Total Coins</p>
+              <p className="text-3xl font-bold text-purple-600">
+                {testHistory.length > 0 ? Math.round(testHistory.reduce((sum, t) => sum + t.score, 0) / testHistory.length) : 0}
+              </p>
+              <p className="text-gray-600 text-sm">Avg Per Test</p>
             </div>
           </div>
         </div>

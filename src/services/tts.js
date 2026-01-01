@@ -102,6 +102,18 @@ class TTSService {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = SPEED;
       utterance.lang = 'en-GB';
+
+      // Try to use a female voice (prefer UK voices for British English)
+      const voices = speechSynthesis.getVoices();
+      const femaleVoice = voices.find(v =>
+        (v.name.includes('Kate') || v.name.includes('Samantha') || v.name.includes('Female')) &&
+        v.lang.startsWith('en')
+      ) || voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'));
+
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      }
+
       utterance.onend = onEnd;
       speechSynthesis.speak(utterance);
       return true;
