@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ttsService from './services/tts';
+import { mathsQuestions, mathsCategories } from './data/mathsQuestions';
 
 // ============ MASSIVE WORD LIST (160+ words) ============
 const allWords = [
@@ -186,113 +187,235 @@ const allWords = [
 ];
 
 const sampleRewards = [
-  // ========== QUICK WINS (100-350 coins) - Weekly treats ==========
-  { id: 1, name: 'Stay Up 15 Mins Late', cost: 100, icon: '🌙' },
-  { id: 2, name: 'Pick a Snack', cost: 150, icon: '🍿' },
-  { id: 3, name: 'No Chores Pass', cost: 200, icon: '🎫' },
-  { id: 4, name: 'Extra Dessert', cost: 250, icon: '🧁' },
-  { id: 5, name: 'Lie In (30 mins)', cost: 300, icon: '😴' },
-  { id: 6, name: 'Stay Up 30 Mins Late', cost: 350, icon: '🌜' },
+  // ========== TINY TREATS (50-100 coins) - Daily wins ==========
+  { id: 1, name: 'Gold Star Sticker', cost: 50, icon: '⭐' },
+  { id: 2, name: 'High Five from Dad', cost: 50, icon: '🖐️' },
+  { id: 3, name: 'Victory Dance', cost: 75, icon: '💃' },
+  { id: 4, name: 'Silly Photo Together', cost: 75, icon: '🤳' },
+  { id: 5, name: 'Pick Background Music', cost: 100, icon: '🎵' },
+  { id: 6, name: 'Stay Up 10 Mins Late', cost: 100, icon: '🌙' },
 
-  // ========== TREATS (400-1000 coins) - Bi-weekly goals ==========
-  { id: 7, name: 'Boba Tea', cost: 400, icon: '🧋' },
-  { id: 8, name: 'Pick Movie Night', cost: 450, icon: '🎬' },
-  { id: 9, name: '30 Mins Screen Time', cost: 500, icon: '📱' },
-  { id: 10, name: 'Hot Chocolate Trip', cost: 550, icon: '☕' },
-  { id: 11, name: 'Ice Cream Trip', cost: 600, icon: '🍦' },
-  { id: 12, name: 'Milkshake Trip', cost: 650, icon: '🥤' },
-  { id: 13, name: 'Breakfast in Bed', cost: 700, icon: '🥞' },
-  { id: 14, name: 'Pick Dinner', cost: 800, icon: '🍕' },
-  { id: 15, name: 'Games Night (Your Rules)', cost: 900, icon: '🎮' },
-  { id: 16, name: '1 Hour Screen Time', cost: 1000, icon: '📺' },
+  // ========== QUICK WINS (125-300 coins) - Few days ==========
+  { id: 7, name: 'Stay Up 15 Mins Late', cost: 125, icon: '🌛' },
+  { id: 8, name: 'Pick a Snack', cost: 150, icon: '🍿' },
+  { id: 9, name: 'Extra TV Episode', cost: 175, icon: '📺' },
+  { id: 10, name: 'No Chores Pass', cost: 200, icon: '🎫' },
+  { id: 11, name: 'Cookie Treat', cost: 200, icon: '🍪' },
+  { id: 12, name: 'Extra Dessert', cost: 225, icon: '🧁' },
+  { id: 13, name: 'Pick Car Music', cost: 250, icon: '🚗' },
+  { id: 14, name: 'Lie In (30 mins)', cost: 275, icon: '😴' },
+  { id: 15, name: 'Stay Up 30 Mins Late', cost: 300, icon: '🌜' },
 
-  // ========== BIG REWARDS (1200-2500 coins) - Monthly goals ==========
-  { id: 17, name: 'New Book', cost: 1200, icon: '📚' },
-  { id: 18, name: 'Cinema Trip', cost: 1400, icon: '🎥' },
-  { id: 19, name: 'Baking Day Together', cost: 1500, icon: '🧁' },
-  { id: 20, name: 'Craft Supplies', cost: 1600, icon: '🎨' },
-  { id: 21, name: 'Friend Playdate', cost: 1800, icon: '👯' },
-  { id: 22, name: 'Takeaway Night', cost: 2000, icon: '🥡' },
-  { id: 23, name: 'Skip a Homework', cost: 2200, icon: '📝' },
-  { id: 24, name: 'Day Out (Local)', cost: 2500, icon: '🎡' },
+  // ========== TREATS (350-700 coins) - Weekly goals ==========
+  { id: 16, name: 'Boba Tea', cost: 350, icon: '🧋' },
+  { id: 17, name: 'Pick Movie Night', cost: 400, icon: '🎬' },
+  { id: 18, name: 'Smoothie Trip', cost: 425, icon: '🥤' },
+  { id: 19, name: '30 Mins Screen Time', cost: 450, icon: '📱' },
+  { id: 20, name: 'Hot Chocolate Trip', cost: 475, icon: '☕' },
+  { id: 21, name: 'Sweet Shop Visit', cost: 500, icon: '🍬' },
+  { id: 22, name: 'Ice Cream Trip', cost: 525, icon: '🍦' },
+  { id: 23, name: 'Milkshake Trip', cost: 550, icon: '🥛' },
+  { id: 24, name: 'Donut Run', cost: 575, icon: '🍩' },
+  { id: 25, name: 'Breakfast in Bed', cost: 600, icon: '🥞' },
+  { id: 26, name: 'Pancake Morning', cost: 625, icon: '🥞' },
+  { id: 27, name: 'Waffle Treat', cost: 650, icon: '🧇' },
+  { id: 28, name: 'Pick Dinner', cost: 700, icon: '🍕' },
 
-  // ========== EPIC REWARDS (3000-5000 coins) - Term goals ==========
-  { id: 25, name: 'Friend Sleepover', cost: 3000, icon: '🛏️' },
-  { id: 26, name: 'Shopping Trip', cost: 3500, icon: '🛍️' },
-  { id: 27, name: 'Choose a New Game', cost: 4000, icon: '🎲' },
-  { id: 28, name: 'Theme Park Day', cost: 4500, icon: '🎢' },
-  { id: 29, name: 'Special Day Out', cost: 5000, icon: '✨' },
+  // ========== ACTIVITIES (750-1200 coins) - Bi-weekly goals ==========
+  { id: 29, name: 'Games Night (Your Rules)', cost: 750, icon: '🎮' },
+  { id: 30, name: 'Park Picnic', cost: 800, icon: '🧺' },
+  { id: 31, name: '1 Hour Screen Time', cost: 850, icon: '💻' },
+  { id: 32, name: 'Bubble Bath with Extras', cost: 900, icon: '🛁' },
+  { id: 33, name: 'Nail Painting Session', cost: 950, icon: '💅' },
+  { id: 34, name: 'Dance Party', cost: 1000, icon: '🪩' },
+  { id: 35, name: 'Puzzle Together', cost: 1050, icon: '🧩' },
+  { id: 36, name: 'Build Something Together', cost: 1100, icon: '🔧' },
+  { id: 37, name: 'Art Session', cost: 1150, icon: '🎨' },
+  { id: 38, name: 'New Book', cost: 1200, icon: '📚' },
+
+  // ========== BIG REWARDS (1300-2000 coins) - Monthly goals ==========
+  { id: 39, name: 'Cinema Trip', cost: 1300, icon: '🎥' },
+  { id: 40, name: 'Bowling Trip', cost: 1400, icon: '🎳' },
+  { id: 41, name: 'Baking Day Together', cost: 1500, icon: '🍰' },
+  { id: 42, name: 'Craft Supplies Haul', cost: 1550, icon: '✂️' },
+  { id: 43, name: 'Mini Golf', cost: 1600, icon: '⛳' },
+  { id: 44, name: 'Trampoline Park', cost: 1700, icon: '🤸' },
+  { id: 45, name: 'Friend Playdate', cost: 1800, icon: '👯' },
+  { id: 46, name: 'Swimming Trip', cost: 1850, icon: '🏊' },
+  { id: 47, name: 'Takeaway Night', cost: 1900, icon: '🥡' },
+  { id: 48, name: 'Skip a Homework', cost: 2000, icon: '📝' },
+
+  // ========== ADVENTURES (2200-3500 coins) - Term goals ==========
+  { id: 49, name: 'Day Out (Local)', cost: 2200, icon: '🎡' },
+  { id: 50, name: 'Escape Room', cost: 2400, icon: '🔐' },
+  { id: 51, name: 'Pottery Painting', cost: 2500, icon: '🏺' },
+  { id: 52, name: 'Soft Play (Big Kid Zone)', cost: 2600, icon: '🏰' },
+  { id: 53, name: 'Laser Tag', cost: 2800, icon: '🔫' },
+  { id: 54, name: 'Friend Sleepover', cost: 3000, icon: '🛏️' },
+  { id: 55, name: 'Zoo/Aquarium Trip', cost: 3200, icon: '🐧' },
+  { id: 56, name: 'Ice Skating', cost: 3400, icon: '⛸️' },
+
+  // ========== EPIC REWARDS (3600-5500 coins) - Half-term goals ==========
+  { id: 57, name: 'Shopping Trip', cost: 3600, icon: '🛍️' },
+  { id: 58, name: 'Choose a New Game', cost: 3800, icon: '🎲' },
+  { id: 59, name: 'Climbing Wall', cost: 4000, icon: '🧗' },
+  { id: 60, name: 'Beach Day', cost: 4200, icon: '🏖️' },
+  { id: 61, name: 'Theme Park Day', cost: 4500, icon: '🎢' },
+  { id: 62, name: 'Water Park', cost: 4800, icon: '🌊' },
+  { id: 63, name: 'Special Day Out', cost: 5000, icon: '✨' },
+  { id: 64, name: 'Sleepover Party (2 Friends)', cost: 5500, icon: '🎉' },
 
   // ========== LEGENDARY (6000-10000 coins) - Half-year goals ==========
-  { id: 30, name: 'Big Surprise', cost: 6000, icon: '🎁' },
-  { id: 31, name: 'Adventure Day', cost: 7000, icon: '🗺️' },
-  { id: 32, name: 'Concert/Show Tickets', cost: 8000, icon: '🎤' },
-  { id: 33, name: 'Spa Day', cost: 9000, icon: '💅' },
-  { id: 34, name: 'Ultimate Day Out', cost: 10000, icon: '🌟' },
+  { id: 65, name: 'Big Surprise', cost: 6000, icon: '🎁' },
+  { id: 66, name: 'Museum/Gallery Trip', cost: 6500, icon: '🏛️' },
+  { id: 67, name: 'Adventure Day', cost: 7000, icon: '🗺️' },
+  { id: 68, name: 'Theatre Show', cost: 7500, icon: '🎭' },
+  { id: 69, name: 'Concert/Show Tickets', cost: 8000, icon: '🎤' },
+  { id: 70, name: 'Spa Day', cost: 8500, icon: '🧖' },
+  { id: 71, name: 'Castle/Palace Visit', cost: 9000, icon: '🏰' },
+  { id: 72, name: 'Forest Adventure', cost: 9500, icon: '🌲' },
+  { id: 73, name: 'Ultimate Day Out', cost: 10000, icon: '🌟' },
 
-  // ========== MYTHIC (12000-25000 coins) - Year goals ==========
-  { id: 35, name: 'Redecorate Room', cost: 12000, icon: '🛋️' },
-  { id: 36, name: 'New Gadget', cost: 15000, icon: '📱' },
-  { id: 37, name: 'Weekend Trip', cost: 18000, icon: '🏨' },
-  { id: 38, name: 'Birthday Party Upgrade', cost: 20000, icon: '🎂' },
-  { id: 39, name: 'Year Champion Prize', cost: 25000, icon: '🏆' },
+  // ========== MYTHIC (11000-18000 coins) - Year goals ==========
+  { id: 74, name: 'Makeover Day', cost: 11000, icon: '💄' },
+  { id: 75, name: 'Redecorate Room', cost: 12000, icon: '🛋️' },
+  { id: 76, name: 'Photography Day', cost: 13000, icon: '📸' },
+  { id: 77, name: 'Cooking Class', cost: 14000, icon: '👩‍🍳' },
+  { id: 78, name: 'New Gadget', cost: 15000, icon: '📱' },
+  { id: 79, name: 'Horse Riding Lesson', cost: 16000, icon: '🐴' },
+  { id: 80, name: 'Glamping Night', cost: 17000, icon: '⛺' },
+  { id: 81, name: 'Weekend Trip', cost: 18000, icon: '🏨' },
+
+  // ========== ULTIMATE (20000-30000 coins) - Champion rewards ==========
+  { id: 82, name: 'Birthday Party Upgrade', cost: 20000, icon: '🎂' },
+  { id: 83, name: 'Design Your Day', cost: 22000, icon: '📋' },
+  { id: 84, name: 'Year Champion Prize', cost: 25000, icon: '🏆' },
+  { id: 85, name: 'Ultimate Adventure', cost: 28000, icon: '🚀' },
+  { id: 86, name: 'Dream Day', cost: 30000, icon: '👸' },
 ];
 
 const badges = [
   // ========== GETTING STARTED ==========
   { id: 'first', name: 'First Steps', icon: '👣', desc: 'Complete your first test' },
+  { id: 'first5', name: 'Warming Up', icon: '🌡️', desc: 'Complete 5 tests' },
+  { id: 'comeback', name: 'Back Again', icon: '🔄', desc: 'Return after a day off' },
+
+  // ========== PERFECT SCORES ==========
   { id: 'perfect', name: 'Perfect Score', icon: '⭐', desc: 'Get 100% on a test' },
   { id: 'perfect3', name: 'Hat Trick', icon: '🎩', desc: '3 perfect scores' },
   { id: 'perfect5', name: 'High Five', icon: '🖐️', desc: '5 perfect scores' },
   { id: 'perfect10', name: 'Perfect Ten', icon: '💯', desc: '10 perfect scores' },
+  { id: 'perfect15', name: 'Fifteen Flawless', icon: '🎀', desc: '15 perfect scores' },
   { id: 'perfect25', name: 'Quarter Century', icon: '🎯', desc: '25 perfect scores' },
   { id: 'perfect50', name: 'Half Century', icon: '🏹', desc: '50 perfect scores' },
+  { id: 'perfect75', name: 'Three Quarters', icon: '🎪', desc: '75 perfect scores' },
   { id: 'perfect100', name: 'Centurion', icon: '🦅', desc: '100 perfect scores' },
+  { id: 'perfect150', name: 'Spelling Sage', icon: '🧙‍♀️', desc: '150 perfect scores' },
+  { id: 'perfect200', name: 'Word Wizard', icon: '✨', desc: '200 perfect scores' },
 
   // ========== STREAKS ==========
   { id: 'streak3', name: 'Streak Starter', icon: '🔥', desc: '3-day streak' },
+  { id: 'streak5', name: 'Five Alive', icon: '🖐️', desc: '5-day streak' },
   { id: 'streak7', name: 'Week Warrior', icon: '💪', desc: '1-week streak' },
+  { id: 'streak10', name: 'Ten Days Strong', icon: '🔟', desc: '10-day streak' },
   { id: 'streak14', name: 'Fortnight Fighter', icon: '⚔️', desc: '2-week streak' },
   { id: 'streak21', name: 'Triple Week', icon: '🏆', desc: '3-week streak' },
   { id: 'streak28', name: 'Month Master', icon: '👑', desc: '4-week streak' },
-  { id: 'streak45', name: 'Six Week Star', icon: '⭐', desc: '45-day streak' },
+  { id: 'streak35', name: 'Five Week Fury', icon: '⚡', desc: '35-day streak' },
+  { id: 'streak45', name: 'Six Week Star', icon: '🌟', desc: '45-day streak' },
   { id: 'streak60', name: 'Two Month Hero', icon: '🦸', desc: '60-day streak' },
+  { id: 'streak75', name: 'Seventy Five', icon: '💎', desc: '75-day streak' },
   { id: 'streak90', name: 'Quarter Year', icon: '🌙', desc: '90-day streak' },
+  { id: 'streak100', name: 'Century Streak', icon: '💯', desc: '100-day streak!' },
   { id: 'streak120', name: 'Four Month Legend', icon: '🔮', desc: '120-day streak' },
-  { id: 'streak180', name: 'Half Year Hero', icon: '🌟', desc: '180-day streak' },
+  { id: 'streak150', name: 'Five Month Fire', icon: '🌋', desc: '150-day streak' },
+  { id: 'streak180', name: 'Half Year Hero', icon: '☀️', desc: '180-day streak' },
+  { id: 'streak200', name: 'Two Hundred', icon: '🎊', desc: '200-day streak!' },
   { id: 'streak270', name: 'Nine Month Master', icon: '💫', desc: '270-day streak' },
+  { id: 'streak300', name: 'Three Hundred', icon: '🏅', desc: '300-day streak!' },
   { id: 'streak365', name: 'YEAR CHAMPION', icon: '👸', desc: '365-day streak!' },
 
   // ========== COIN MILESTONES ==========
   { id: 'century', name: 'Century Club', icon: '💰', desc: 'Earn 100 coins' },
+  { id: 'coins250', name: 'Coin Starter', icon: '🪙', desc: 'Earn 250 coins' },
   { id: 'coins500', name: 'Coin Collector', icon: '💎', desc: 'Earn 500 coins' },
+  { id: 'coins750', name: 'Treasure Seeker', icon: '🗝️', desc: 'Earn 750 coins' },
   { id: 'coins1000', name: 'Treasure Hunter', icon: '🏴‍☠️', desc: 'Earn 1,000 coins' },
+  { id: 'coins1500', name: 'Coin Hoarder', icon: '🏺', desc: 'Earn 1,500 coins' },
+  { id: 'coins2000', name: 'Gold Digger', icon: '⛏️', desc: 'Earn 2,000 coins' },
   { id: 'coins2500', name: 'Money Bags', icon: '💵', desc: 'Earn 2,500 coins' },
+  { id: 'coins3000', name: 'Cash Queen', icon: '👑', desc: 'Earn 3,000 coins' },
+  { id: 'coins4000', name: 'Fortune Seeker', icon: '🔮', desc: 'Earn 4,000 coins' },
   { id: 'coins5000', name: 'Gold Rush', icon: '🥇', desc: 'Earn 5,000 coins' },
+  { id: 'coins7500', name: 'Wealthy', icon: '💎', desc: 'Earn 7,500 coins' },
   { id: 'coins10000', name: 'Ten Thousand', icon: '🤑', desc: 'Earn 10,000 coins' },
+  { id: 'coins12500', name: 'Richie Rich', icon: '🎰', desc: 'Earn 12,500 coins' },
   { id: 'coins15000', name: 'Fortune Finder', icon: '💸', desc: 'Earn 15,000 coins' },
-  { id: 'coins20000', name: 'Mega Rich', icon: '🏦', desc: 'Earn 20,000 coins' },
-  { id: 'coins25000', name: 'COIN QUEEN', icon: '👑', desc: 'Earn 25,000 coins!' },
+  { id: 'coins17500', name: 'Gold Vault', icon: '🏦', desc: 'Earn 17,500 coins' },
+  { id: 'coins20000', name: 'Mega Rich', icon: '💲', desc: 'Earn 20,000 coins' },
+  { id: 'coins25000', name: 'Quarter Million', icon: '🌟', desc: 'Earn 25,000 coins!' },
+  { id: 'coins30000', name: 'COIN QUEEN', icon: '👸', desc: 'Earn 30,000 coins!' },
 
   // ========== TEST MILESTONES ==========
+  { id: 'tests5', name: 'First Few', icon: '📝', desc: '5 tests' },
   { id: 'tests10', name: 'Getting Started', icon: '📚', desc: '10 tests' },
+  { id: 'tests15', name: 'Building Momentum', icon: '🎈', desc: '15 tests' },
   { id: 'tests25', name: 'Committed', icon: '📖', desc: '25 tests' },
+  { id: 'tests40', name: 'Keep Going', icon: '🚶', desc: '40 tests' },
   { id: 'tests50', name: 'Dedicated', icon: '🧙', desc: '50 tests' },
+  { id: 'tests75', name: 'Seventy Five', icon: '🎯', desc: '75 tests' },
   { id: 'tests100', name: 'Century', icon: '🏅', desc: '100 tests' },
+  { id: 'tests125', name: 'Quarter Plus', icon: '📈', desc: '125 tests' },
   { id: 'tests150', name: 'Unstoppable', icon: '🚀', desc: '150 tests' },
+  { id: 'tests175', name: 'Nearly There', icon: '🎪', desc: '175 tests' },
   { id: 'tests200', name: 'Super Speller', icon: '⚡', desc: '200 tests' },
+  { id: 'tests225', name: 'Word Expert', icon: '📕', desc: '225 tests' },
   { id: 'tests250', name: 'Elite', icon: '🎖️', desc: '250 tests' },
+  { id: 'tests275', name: 'Almost Legend', icon: '🌅', desc: '275 tests' },
   { id: 'tests300', name: 'Legendary', icon: '👨‍🎓', desc: '300 tests' },
+  { id: 'tests325', name: 'Word Master', icon: '📜', desc: '325 tests' },
+  { id: 'tests350', name: 'Nearly Champion', icon: '🎉', desc: '350 tests' },
   { id: 'tests365', name: 'YEAR OF SPELLING', icon: '📅', desc: '365 tests!' },
+  { id: 'tests400', name: 'Beyond Legend', icon: '🌌', desc: '400 tests!' },
 
-  // ========== CATEGORY MASTERY ==========
+  // ========== CATEGORY MASTERY (All 10 categories) ==========
   { id: 'master_tricky', name: 'Tricky Master', icon: '🎭', desc: '90% on tricky words' },
-  { id: 'master_silent', name: 'Silent Hero', icon: '🤫', desc: '90% on silent letters' },
+  { id: 'master_ibeforee', name: 'I Before E Expert', icon: '👁️', desc: '90% on i-before-e' },
+  { id: 'master_softc', name: 'Soft C Specialist', icon: '🐱', desc: '90% on soft-c words' },
   { id: 'master_double', name: 'Double Trouble', icon: '✌️', desc: '90% on double letters' },
+  { id: 'master_silent', name: 'Silent Hero', icon: '🤫', desc: '90% on silent letters' },
   { id: 'master_endings', name: 'Ending Expert', icon: '🔚', desc: '90% on word endings' },
   { id: 'master_homophones', name: 'Sound Alike Pro', icon: '👂', desc: '90% on homophones' },
-  { id: 'allrounder', name: 'All-Rounder', icon: '🌈', desc: '75%+ in all categories' },
+  { id: 'master_hard', name: 'Challenge Champion', icon: '💪', desc: '90% on hard spellings' },
+  { id: 'master_prefixes', name: 'Prefix Pro', icon: '🔤', desc: '90% on prefixes' },
+  { id: 'master_compound', name: 'Compound King', icon: '🔗', desc: '90% on compound words' },
+
+  // ========== SPECIAL ACHIEVEMENTS ==========
+  { id: 'speedster', name: 'Speedster', icon: '⚡', desc: 'Complete test in under 30s' },
+  { id: 'patient', name: 'Patient Speller', icon: '🐢', desc: 'Take your time (2+ mins)' },
+  { id: 'earlybird', name: 'Early Bird', icon: '🐦', desc: 'Test before 8am' },
+  { id: 'nightowl', name: 'Night Owl', icon: '🦉', desc: 'Test after 8pm' },
+  { id: 'weekend', name: 'Weekend Warrior', icon: '🎮', desc: 'Test on Saturday & Sunday' },
+  { id: 'hotstreak5', name: 'Hot Streak', icon: '🔥', desc: '5 correct in a row (in-test)' },
+  { id: 'allcorrect3', name: 'Triple Perfect', icon: '🎯', desc: '3 perfect tests in a row' },
+  { id: 'allcorrect5', name: 'Five Star', icon: '⭐', desc: '5 perfect tests in a row' },
+  { id: 'firsttry', name: 'First Try Hero', icon: '🏆', desc: 'Get word right you got wrong before' },
+
+  // ========== MILESTONE ACHIEVEMENTS ==========
+  { id: 'allrounder', name: 'All-Rounder', icon: '🌈', desc: '75%+ in 5 categories' },
+  { id: 'versatile', name: 'Versatile', icon: '🎨', desc: '80%+ in 7 categories' },
+  { id: 'mastery', name: 'Category Master', icon: '🏆', desc: '85%+ in all categories' },
   { id: 'perfectionist', name: 'Perfectionist', icon: '💎', desc: '90%+ in all categories' },
+  { id: 'ultimate', name: 'ULTIMATE SPELLER', icon: '👸', desc: '95%+ in all categories!' },
+
+  // ========== FUN BADGES ==========
+  { id: 'consistent', name: 'Consistent', icon: '📊', desc: 'Same score 3 tests in a row' },
+  { id: 'improver', name: 'Improver', icon: '📈', desc: 'Beat your average by 20%' },
+  { id: 'determined', name: 'Determined', icon: '💪', desc: 'Keep trying after 3 wrong' },
+  { id: 'curious', name: 'Curious', icon: '🔍', desc: 'Try all 10 word categories' },
+  { id: 'collector', name: 'Badge Collector', icon: '🎖️', desc: 'Earn 25 badges' },
+  { id: 'halfbadges', name: 'Halfway Hero', icon: '🌗', desc: 'Earn 50% of all badges' },
+  { id: 'badgemaster', name: 'Badge Master', icon: '🏅', desc: 'Earn 75% of all badges' },
 ];
 
 const categoryNames = {
@@ -319,14 +442,65 @@ const getDefaultData = () => ({
   lastTestDate: null,
   earnedBadges: [],
   claimedRewards: [],
-  testHistory: [],
-  wordStats: {}, // { wordId: { attempts: 0, correct: 0, lastAttempt: date } }
+  currentSubject: 'spelling', // Track which subject is active
+  spelling: {
+    testHistory: [],
+    wordStats: {}, // { wordId: { attempts: 0, correct: 0, lastAttempt: date } }
+  },
+  maths: {
+    testHistory: [],
+    questionStats: {}, // { questionId: { attempts: 0, correct: 0, lastAttempt: date } }
+  },
+  science: {
+    testHistory: [],
+    questionStats: {}, // { questionId: { attempts: 0, correct: 0, lastAttempt: date } }
+  },
 });
+
+// Migration function to convert old single-subject data to multi-subject
+const migrateToMultiSubject = (oldData) => {
+  // Check if already migrated
+  if (oldData.spelling || oldData.maths || oldData.science) {
+    return oldData;
+  }
+
+  // Migrate old data structure
+  const migrated = {
+    ...getDefaultData(),
+    coins: oldData.coins || 0,
+    totalCoinsEarned: oldData.totalCoinsEarned || 0,
+    streak: oldData.streak || 0,
+    bestStreak: oldData.bestStreak || 0,
+    lastTestDate: oldData.lastTestDate || null,
+    earnedBadges: oldData.earnedBadges || [],
+    claimedRewards: oldData.claimedRewards || [],
+    currentSubject: 'spelling',
+    spelling: {
+      testHistory: oldData.testHistory || [],
+      wordStats: oldData.wordStats || {},
+    },
+    maths: {
+      testHistory: [],
+      questionStats: {},
+    },
+    science: {
+      testHistory: [],
+      questionStats: {},
+    },
+  };
+
+  console.log('✅ Migrated to multi-subject data structure');
+  return migrated;
+};
 
 const loadData = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return { ...getDefaultData(), ...JSON.parse(saved) };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const migrated = migrateToMultiSubject(parsed);
+      return { ...getDefaultData(), ...migrated };
+    }
   } catch (e) { console.error('Failed to load:', e); }
   return getDefaultData();
 };
@@ -390,6 +564,24 @@ const syncToGist = (data) => {
   });
 };
 
+// ============ DYSLEXIA-FRIENDLY HELPERS ============
+// Check if two words are visually too similar (confusing for dyslexia)
+const areVisuallySimilar = (word1, word2) => {
+  // Same length and 80%+ letters match = too similar
+  if (Math.abs(word1.length - word2.length) > 2) return false;
+
+  const w1 = word1.toLowerCase();
+  const w2 = word2.toLowerCase();
+  const maxLen = Math.max(w1.length, w2.length);
+  let matches = 0;
+
+  for (let i = 0; i < Math.min(w1.length, w2.length); i++) {
+    if (w1[i] === w2[i]) matches++;
+  }
+
+  return (matches / maxLen) > 0.75; // 75%+ similar = confusing
+};
+
 // ============ SMART WORD SELECTION ============
 const selectSmartWords = (gameData, count = 5) => {
   const { wordStats, testHistory } = gameData;
@@ -397,18 +589,26 @@ const selectSmartWords = (gameData, count = 5) => {
   // Every 3rd test, do a RANDOM selection for variety
   const testCount = testHistory?.length || 0;
   if (testCount > 0 && testCount % 3 === 0) {
-    // Pure random selection with category variety
+    // Pure random selection with category variety (but still avoid visually similar words)
     const shuffled = [...allWords].sort(() => Math.random() - 0.5);
     const selected = [];
     const usedCategories = new Set();
     for (const word of shuffled) {
       if (selected.length >= count) break;
       if (selected.length < 3 && usedCategories.has(word.category)) continue;
+
+      // DYSLEXIA-FRIENDLY: Skip if too similar to already selected words
+      const tooSimilar = selected.some(w => areVisuallySimilar(w.word, word.word));
+      if (tooSimilar) continue;
+
       selected.push(word);
       usedCategories.add(word.category);
     }
     while (selected.length < count && shuffled.length > selected.length) {
-      const remaining = shuffled.filter(w => !selected.includes(w));
+      const remaining = shuffled.filter(w =>
+        !selected.includes(w) &&
+        !selected.some(s => areVisuallySimilar(s.word, w.word))
+      );
       if (remaining.length === 0) break;
       selected.push(remaining[0]);
     }
@@ -432,7 +632,7 @@ const selectSmartWords = (gameData, count = 5) => {
 
   // Score each word (lower = needs more practice)
   const scoredWords = allWords.map(word => {
-    const stats = wordStats[word.id] || { attempts: 0, correct: 0 };
+    const stats = wordStats[word.id] || { attempts: 0, correct: 0, consecutiveCorrect: 0 };
     const catStats = categoryAccuracy[word.category] || { correct: 0, total: 0 };
     const catAccuracy = catStats.total > 0 ? catStats.correct / catStats.total : 0.5;
     const wordAccuracy = stats.attempts > 0 ? stats.correct / stats.attempts : 0.5;
@@ -446,6 +646,11 @@ const selectSmartWords = (gameData, count = 5) => {
     // Boost words from weak categories
     if (catAccuracy < 0.5) score -= 0.15;
 
+    // MASTERY SYSTEM: Penalize mastered words (reduce frequency)
+    const consecutive = stats.consecutiveCorrect || 0;
+    if (consecutive >= 5) score += 1.5; // Fully mastered - rarely show (90% less)
+    else if (consecutive >= 3) score += 0.8; // Mastered - show less (70% less)
+
     // MUCH more randomness to prevent repetition (0.6 instead of 0.3)
     score += Math.random() * 0.6;
 
@@ -455,7 +660,7 @@ const selectSmartWords = (gameData, count = 5) => {
   // Sort by score (lowest first = needs most practice)
   scoredWords.sort((a, b) => a.score - b.score);
 
-  // Take top candidates but ensure category variety
+  // Take top candidates but ensure category variety AND avoid visually similar words (dyslexia-friendly)
   const selected = [];
   const usedCategories = new Set();
 
@@ -465,13 +670,20 @@ const selectSmartWords = (gameData, count = 5) => {
     // Prefer variety in first 3 picks
     if (selected.length < 3 && usedCategories.has(word.category)) continue;
 
+    // DYSLEXIA-FRIENDLY: Skip if too similar to already selected words
+    const tooSimilar = selected.some(w => areVisuallySimilar(w.word, word.word));
+    if (tooSimilar) continue;
+
     selected.push(word);
     usedCategories.add(word.category);
   }
 
-  // Fill remaining slots if needed
+  // Fill remaining slots if needed (also check for visual similarity)
   while (selected.length < count) {
-    const remaining = scoredWords.filter(w => !selected.includes(w));
+    const remaining = scoredWords.filter(w =>
+      !selected.includes(w) &&
+      !selected.some(s => areVisuallySimilar(s.word, w.word))
+    );
     if (remaining.length === 0) break;
     selected.push(remaining[0]);
   }
@@ -525,7 +737,7 @@ const BadgePopup = ({ badge, onClose }) => {
 
 // ============ MAIN APP ============
 export default function App() {
-  const [screen, setScreen] = useState('home');
+  const [screen, setScreen] = useState('subject-select');
   const [gameData, setGameData] = useState(loadData);
   const [testWords, setTestWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -588,12 +800,13 @@ export default function App() {
 
         const gist = await gistRes.json();
         const cloudData = JSON.parse(gist.files['alba-spelling-data.json'].content);
+        const migratedCloud = migrateToMultiSubject(cloudData);
 
         // Load cloud data if it has more coins
-        if (cloudData.totalCoinsEarned > gameData.totalCoinsEarned) {
-          localStorage.setItem('alba_spelling_data', JSON.stringify(cloudData));
+        if (migratedCloud.totalCoinsEarned > gameData.totalCoinsEarned) {
+          localStorage.setItem('alba_spelling_data', JSON.stringify(migratedCloud));
           localStorage.setItem('gist_id', latest.id);
-          setGameData(cloudData);
+          setGameData(migratedCloud);
         }
       } catch (e) {
         console.error('Auto-sync failed:', e);
@@ -603,60 +816,101 @@ export default function App() {
     autoSync();
   }, []); // Run once on mount
 
-  const { coins, streak, earnedBadges, totalCoinsEarned, bestStreak, testHistory, claimedRewards, wordStats } = gameData;
+  const { coins, streak, earnedBadges, totalCoinsEarned, bestStreak, claimedRewards, currentSubject, spelling, maths, science } = gameData;
 
-  // Badge checking
+  // Get current subject data (for backward compatibility with spelling screen)
+  const testHistory = spelling.testHistory;
+  const wordStats = spelling.wordStats;
+
+  // Badge checking - comprehensive for 104 badges!
   const checkBadges = (data) => {
     const newBadges = [];
     const perfectTests = data.testHistory.filter(t => t.score === t.total).length;
+    const testCount = data.testHistory.length;
 
-    // Getting started - Perfect scores
-    if (!data.earnedBadges.includes('first') && data.testHistory.length >= 1) newBadges.push('first');
+    // Getting started
+    if (!data.earnedBadges.includes('first') && testCount >= 1) newBadges.push('first');
+    if (!data.earnedBadges.includes('first5') && testCount >= 5) newBadges.push('first5');
+
+    // Perfect scores (11 badges)
     if (!data.earnedBadges.includes('perfect') && perfectTests >= 1) newBadges.push('perfect');
     if (!data.earnedBadges.includes('perfect3') && perfectTests >= 3) newBadges.push('perfect3');
     if (!data.earnedBadges.includes('perfect5') && perfectTests >= 5) newBadges.push('perfect5');
     if (!data.earnedBadges.includes('perfect10') && perfectTests >= 10) newBadges.push('perfect10');
+    if (!data.earnedBadges.includes('perfect15') && perfectTests >= 15) newBadges.push('perfect15');
     if (!data.earnedBadges.includes('perfect25') && perfectTests >= 25) newBadges.push('perfect25');
     if (!data.earnedBadges.includes('perfect50') && perfectTests >= 50) newBadges.push('perfect50');
+    if (!data.earnedBadges.includes('perfect75') && perfectTests >= 75) newBadges.push('perfect75');
     if (!data.earnedBadges.includes('perfect100') && perfectTests >= 100) newBadges.push('perfect100');
+    if (!data.earnedBadges.includes('perfect150') && perfectTests >= 150) newBadges.push('perfect150');
+    if (!data.earnedBadges.includes('perfect200') && perfectTests >= 200) newBadges.push('perfect200');
 
-    // Streaks (up to full year!)
+    // Streaks (20 badges)
     if (!data.earnedBadges.includes('streak3') && data.streak >= 3) newBadges.push('streak3');
+    if (!data.earnedBadges.includes('streak5') && data.streak >= 5) newBadges.push('streak5');
     if (!data.earnedBadges.includes('streak7') && data.streak >= 7) newBadges.push('streak7');
+    if (!data.earnedBadges.includes('streak10') && data.streak >= 10) newBadges.push('streak10');
     if (!data.earnedBadges.includes('streak14') && data.streak >= 14) newBadges.push('streak14');
     if (!data.earnedBadges.includes('streak21') && data.streak >= 21) newBadges.push('streak21');
     if (!data.earnedBadges.includes('streak28') && data.streak >= 28) newBadges.push('streak28');
+    if (!data.earnedBadges.includes('streak35') && data.streak >= 35) newBadges.push('streak35');
     if (!data.earnedBadges.includes('streak45') && data.streak >= 45) newBadges.push('streak45');
     if (!data.earnedBadges.includes('streak60') && data.streak >= 60) newBadges.push('streak60');
+    if (!data.earnedBadges.includes('streak75') && data.streak >= 75) newBadges.push('streak75');
     if (!data.earnedBadges.includes('streak90') && data.streak >= 90) newBadges.push('streak90');
+    if (!data.earnedBadges.includes('streak100') && data.streak >= 100) newBadges.push('streak100');
     if (!data.earnedBadges.includes('streak120') && data.streak >= 120) newBadges.push('streak120');
+    if (!data.earnedBadges.includes('streak150') && data.streak >= 150) newBadges.push('streak150');
     if (!data.earnedBadges.includes('streak180') && data.streak >= 180) newBadges.push('streak180');
+    if (!data.earnedBadges.includes('streak200') && data.streak >= 200) newBadges.push('streak200');
     if (!data.earnedBadges.includes('streak270') && data.streak >= 270) newBadges.push('streak270');
+    if (!data.earnedBadges.includes('streak300') && data.streak >= 300) newBadges.push('streak300');
     if (!data.earnedBadges.includes('streak365') && data.streak >= 365) newBadges.push('streak365');
 
-    // Coin milestones (up to 25k for year-long economy)
+    // Coin milestones (19 badges)
     if (!data.earnedBadges.includes('century') && data.totalCoinsEarned >= 100) newBadges.push('century');
+    if (!data.earnedBadges.includes('coins250') && data.totalCoinsEarned >= 250) newBadges.push('coins250');
     if (!data.earnedBadges.includes('coins500') && data.totalCoinsEarned >= 500) newBadges.push('coins500');
+    if (!data.earnedBadges.includes('coins750') && data.totalCoinsEarned >= 750) newBadges.push('coins750');
     if (!data.earnedBadges.includes('coins1000') && data.totalCoinsEarned >= 1000) newBadges.push('coins1000');
+    if (!data.earnedBadges.includes('coins1500') && data.totalCoinsEarned >= 1500) newBadges.push('coins1500');
+    if (!data.earnedBadges.includes('coins2000') && data.totalCoinsEarned >= 2000) newBadges.push('coins2000');
     if (!data.earnedBadges.includes('coins2500') && data.totalCoinsEarned >= 2500) newBadges.push('coins2500');
+    if (!data.earnedBadges.includes('coins3000') && data.totalCoinsEarned >= 3000) newBadges.push('coins3000');
+    if (!data.earnedBadges.includes('coins4000') && data.totalCoinsEarned >= 4000) newBadges.push('coins4000');
     if (!data.earnedBadges.includes('coins5000') && data.totalCoinsEarned >= 5000) newBadges.push('coins5000');
+    if (!data.earnedBadges.includes('coins7500') && data.totalCoinsEarned >= 7500) newBadges.push('coins7500');
     if (!data.earnedBadges.includes('coins10000') && data.totalCoinsEarned >= 10000) newBadges.push('coins10000');
+    if (!data.earnedBadges.includes('coins12500') && data.totalCoinsEarned >= 12500) newBadges.push('coins12500');
     if (!data.earnedBadges.includes('coins15000') && data.totalCoinsEarned >= 15000) newBadges.push('coins15000');
+    if (!data.earnedBadges.includes('coins17500') && data.totalCoinsEarned >= 17500) newBadges.push('coins17500');
     if (!data.earnedBadges.includes('coins20000') && data.totalCoinsEarned >= 20000) newBadges.push('coins20000');
     if (!data.earnedBadges.includes('coins25000') && data.totalCoinsEarned >= 25000) newBadges.push('coins25000');
+    if (!data.earnedBadges.includes('coins30000') && data.totalCoinsEarned >= 30000) newBadges.push('coins30000');
 
-    // Test milestones (up to 365 for full year)
-    if (!data.earnedBadges.includes('tests10') && data.testHistory.length >= 10) newBadges.push('tests10');
-    if (!data.earnedBadges.includes('tests25') && data.testHistory.length >= 25) newBadges.push('tests25');
-    if (!data.earnedBadges.includes('tests50') && data.testHistory.length >= 50) newBadges.push('tests50');
-    if (!data.earnedBadges.includes('tests100') && data.testHistory.length >= 100) newBadges.push('tests100');
-    if (!data.earnedBadges.includes('tests150') && data.testHistory.length >= 150) newBadges.push('tests150');
-    if (!data.earnedBadges.includes('tests200') && data.testHistory.length >= 200) newBadges.push('tests200');
-    if (!data.earnedBadges.includes('tests250') && data.testHistory.length >= 250) newBadges.push('tests250');
-    if (!data.earnedBadges.includes('tests300') && data.testHistory.length >= 300) newBadges.push('tests300');
-    if (!data.earnedBadges.includes('tests365') && data.testHistory.length >= 365) newBadges.push('tests365');
+    // Test milestones (20 badges)
+    if (!data.earnedBadges.includes('tests5') && testCount >= 5) newBadges.push('tests5');
+    if (!data.earnedBadges.includes('tests10') && testCount >= 10) newBadges.push('tests10');
+    if (!data.earnedBadges.includes('tests15') && testCount >= 15) newBadges.push('tests15');
+    if (!data.earnedBadges.includes('tests25') && testCount >= 25) newBadges.push('tests25');
+    if (!data.earnedBadges.includes('tests40') && testCount >= 40) newBadges.push('tests40');
+    if (!data.earnedBadges.includes('tests50') && testCount >= 50) newBadges.push('tests50');
+    if (!data.earnedBadges.includes('tests75') && testCount >= 75) newBadges.push('tests75');
+    if (!data.earnedBadges.includes('tests100') && testCount >= 100) newBadges.push('tests100');
+    if (!data.earnedBadges.includes('tests125') && testCount >= 125) newBadges.push('tests125');
+    if (!data.earnedBadges.includes('tests150') && testCount >= 150) newBadges.push('tests150');
+    if (!data.earnedBadges.includes('tests175') && testCount >= 175) newBadges.push('tests175');
+    if (!data.earnedBadges.includes('tests200') && testCount >= 200) newBadges.push('tests200');
+    if (!data.earnedBadges.includes('tests225') && testCount >= 225) newBadges.push('tests225');
+    if (!data.earnedBadges.includes('tests250') && testCount >= 250) newBadges.push('tests250');
+    if (!data.earnedBadges.includes('tests275') && testCount >= 275) newBadges.push('tests275');
+    if (!data.earnedBadges.includes('tests300') && testCount >= 300) newBadges.push('tests300');
+    if (!data.earnedBadges.includes('tests325') && testCount >= 325) newBadges.push('tests325');
+    if (!data.earnedBadges.includes('tests350') && testCount >= 350) newBadges.push('tests350');
+    if (!data.earnedBadges.includes('tests365') && testCount >= 365) newBadges.push('tests365');
+    if (!data.earnedBadges.includes('tests400') && testCount >= 400) newBadges.push('tests400');
 
-    // Category mastery (check if 90%+ in specific categories with 10+ attempts)
+    // Category mastery
     const catStats = {};
     data.testHistory.forEach(test => {
       test.words?.forEach(w => {
@@ -666,21 +920,43 @@ export default function App() {
       });
     });
     const getCatPct = (cat) => catStats[cat] && catStats[cat].total >= 10 ? (catStats[cat].correct / catStats[cat].total) * 100 : 0;
+
+    // All 10 category mastery badges
     if (!data.earnedBadges.includes('master_tricky') && getCatPct('tricky') >= 90) newBadges.push('master_tricky');
-    if (!data.earnedBadges.includes('master_silent') && getCatPct('silent-letters') >= 90) newBadges.push('master_silent');
+    if (!data.earnedBadges.includes('master_ibeforee') && getCatPct('i-before-e') >= 90) newBadges.push('master_ibeforee');
+    if (!data.earnedBadges.includes('master_softc') && getCatPct('soft-c') >= 90) newBadges.push('master_softc');
     if (!data.earnedBadges.includes('master_double') && getCatPct('double-letters') >= 90) newBadges.push('master_double');
+    if (!data.earnedBadges.includes('master_silent') && getCatPct('silent-letters') >= 90) newBadges.push('master_silent');
     if (!data.earnedBadges.includes('master_endings') && getCatPct('endings') >= 90) newBadges.push('master_endings');
     if (!data.earnedBadges.includes('master_homophones') && getCatPct('homophones') >= 90) newBadges.push('master_homophones');
+    if (!data.earnedBadges.includes('master_hard') && getCatPct('hard-spellings') >= 90) newBadges.push('master_hard');
+    if (!data.earnedBadges.includes('master_prefixes') && getCatPct('prefixes') >= 90) newBadges.push('master_prefixes');
+    if (!data.earnedBadges.includes('master_compound') && getCatPct('compound') >= 90) newBadges.push('master_compound');
 
-    // Perfectionist: 95%+ in all categories with at least 10 attempts each
-    const perfCats = Object.keys(catStats).filter(c => catStats[c].total >= 10);
-    const allAbove95 = perfCats.length >= 8 && perfCats.every(c => (catStats[c].correct / catStats[c].total) >= 0.95);
-    if (!data.earnedBadges.includes('perfectionist') && allAbove95) newBadges.push('perfectionist');
+    // Milestone achievements
+    const catsWithAttempts = Object.keys(catStats).filter(c => catStats[c].total >= 5);
+    const catsAbove75 = catsWithAttempts.filter(c => (catStats[c].correct / catStats[c].total) >= 0.75);
+    const catsAbove80 = catsWithAttempts.filter(c => (catStats[c].correct / catStats[c].total) >= 0.80);
+    const catsAbove85 = catsWithAttempts.filter(c => (catStats[c].correct / catStats[c].total) >= 0.85);
+    const catsAbove90 = catsWithAttempts.filter(c => (catStats[c].correct / catStats[c].total) >= 0.90);
+    const catsAbove95 = catsWithAttempts.filter(c => (catStats[c].correct / catStats[c].total) >= 0.95);
 
-    // All-rounder: 75%+ in all categories with at least 5 attempts each
-    const allCats = Object.keys(catStats).filter(c => catStats[c].total >= 5);
-    const allAbove75 = allCats.length >= 5 && allCats.every(c => (catStats[c].correct / catStats[c].total) >= 0.75);
-    if (!data.earnedBadges.includes('allrounder') && allAbove75) newBadges.push('allrounder');
+    if (!data.earnedBadges.includes('allrounder') && catsAbove75.length >= 5) newBadges.push('allrounder');
+    if (!data.earnedBadges.includes('versatile') && catsAbove80.length >= 7) newBadges.push('versatile');
+    if (!data.earnedBadges.includes('mastery') && catsAbove85.length >= 10) newBadges.push('mastery');
+    if (!data.earnedBadges.includes('perfectionist') && catsAbove90.length >= 10) newBadges.push('perfectionist');
+    if (!data.earnedBadges.includes('ultimate') && catsAbove95.length >= 10) newBadges.push('ultimate');
+
+    // Curious - tried all 10 categories
+    const categoriesTried = new Set();
+    data.testHistory.forEach(test => { test.words?.forEach(w => categoriesTried.add(w.category)); });
+    if (!data.earnedBadges.includes('curious') && categoriesTried.size >= 10) newBadges.push('curious');
+
+    // Badge collection badges
+    const totalBadges = data.earnedBadges.length + newBadges.length;
+    if (!data.earnedBadges.includes('collector') && totalBadges >= 25) newBadges.push('collector');
+    if (!data.earnedBadges.includes('halfbadges') && totalBadges >= Math.floor(badges.length / 2)) newBadges.push('halfbadges');
+    if (!data.earnedBadges.includes('badgemaster') && totalBadges >= Math.floor(badges.length * 0.75)) newBadges.push('badgemaster');
 
     if (newBadges.length > 0) {
       setNewBadge(badges.find(b => b.id === newBadges[0]));
@@ -721,6 +997,18 @@ export default function App() {
       if (newStreak === 1) earned = 1;
       else if (newStreak === 2) earned = 2;
       else earned = 3; // 3+ streak
+
+      // MASTERY SYSTEM: Reduce coins for mastered words
+      const wordStats = gameData.wordStats[word.id] || { consecutiveCorrect: 0 };
+      const consecutive = wordStats.consecutiveCorrect || 0;
+      if (consecutive >= 5) {
+        // Fully mastered (5+ in a row) - earn 0.25x coins
+        earned = Math.max(0.25, earned * 0.25);
+      } else if (consecutive >= 3) {
+        // Mastered (3-4 in a row) - earn 0.5x coins
+        earned = Math.max(0.5, earned * 0.5);
+      }
+
       setHotStreak(newStreak);
     } else {
       setHotStreak(0); // Reset streak on wrong answer
@@ -765,13 +1053,14 @@ export default function App() {
       else if (lastDate.toDateString() === yesterday.toDateString()) newStreak = gameData.streak + 1;
     }
 
-    // Update word stats
+    // Update word stats (with consecutive correct tracking for mastery)
     const newWordStats = { ...gameData.wordStats };
     allResults.forEach(r => {
-      const prev = newWordStats[r.wordId] || { attempts: 0, correct: 0 };
+      const prev = newWordStats[r.wordId] || { attempts: 0, correct: 0, consecutiveCorrect: 0 };
       newWordStats[r.wordId] = {
         attempts: prev.attempts + 1,
         correct: prev.correct + (r.correct ? 1 : 0),
+        consecutiveCorrect: r.correct ? (prev.consecutiveCorrect || 0) + 1 : 0, // Track streak for mastery
         lastAttempt: today
       };
     });
@@ -858,11 +1147,42 @@ export default function App() {
 
   // ============ SCREENS ============
 
-  if (screen === 'home') {
+  // Subject Selection Screen
+  if (screen === 'subject-select') {
+    const getSubjectStats = (subject) => {
+      const data = gameData[subject];
+      if (!data || !data.testHistory || data.testHistory.length === 0) {
+        return { lastScore: null, mastery: 0, totalTests: 0 };
+      }
+
+      const testHistory = data.testHistory;
+      const lastTest = testHistory[testHistory.length - 1];
+      const lastScore = lastTest ? Math.round((lastTest.score / lastTest.total) * 100) : null;
+
+      // Calculate mastery percentage
+      const stats = subject === 'spelling' ? data.wordStats : data.questionStats;
+      const attempted = Object.keys(stats).length;
+      const totalItems = subject === 'spelling' ? allWords.length :
+                         subject === 'maths' ? mathsQuestions.length : 0;
+      const mastery = totalItems > 0 ? Math.round((attempted / totalItems) * 100) : 0;
+
+      return { lastScore, mastery, totalTests: testHistory.length };
+    };
+
+    const spellingStats = getSubjectStats('spelling');
+    const mathsStats = getSubjectStats('maths');
+    const scienceStats = getSubjectStats('science');
+
+    const selectSubject = (subject) => {
+      setGameData(prev => ({ ...prev, currentSubject: subject }));
+      setScreen('home');
+    };
+
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-500 to-indigo-600 p-4">
+      <div className="min-h-screen bg-gradient-to-b from-purple-600 via-pink-500 to-orange-500 p-4">
         {newBadge && <BadgePopup badge={newBadge} onClose={() => setNewBadge(null)} />}
         <div className="max-w-md mx-auto">
+          {/* Header with coins and streak */}
           <div className="bg-white/20 backdrop-blur rounded-2xl p-4 mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-3xl">🪙</span>
@@ -874,7 +1194,131 @@ export default function App() {
             </div>
           </div>
 
-          <h1 className="text-3xl font-bold text-white text-center mb-2">Alba's Spelling</h1>
+          <h1 className="text-4xl font-bold text-white text-center mb-2">Alba's Learning</h1>
+          <p className="text-white/90 text-center mb-8 text-lg">Choose your subject! 🎓</p>
+
+          {/* Subject Cards */}
+          <div className="space-y-4">
+            {/* Spelling */}
+            <button
+              onClick={() => selectSubject('spelling')}
+              className="w-full bg-white rounded-3xl p-6 shadow-xl active:scale-98 transition-transform"
+            >
+              <div className="flex items-center gap-4 mb-3">
+                <span className="text-5xl">📚</span>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-2xl text-purple-600">Spelling</div>
+                  <div className="text-gray-500 text-sm">161 words to master</div>
+                </div>
+              </div>
+              {spellingStats.totalTests > 0 && (
+                <div className="flex gap-4 text-sm">
+                  <div className="flex-1 bg-purple-50 rounded-lg p-2">
+                    <div className="text-purple-600 font-semibold">Last Score</div>
+                    <div className="text-2xl font-bold text-purple-700">{spellingStats.lastScore}%</div>
+                  </div>
+                  <div className="flex-1 bg-purple-50 rounded-lg p-2">
+                    <div className="text-purple-600 font-semibold">Mastery</div>
+                    <div className="text-2xl font-bold text-purple-700">{spellingStats.mastery}%</div>
+                  </div>
+                  <div className="flex-1 bg-purple-50 rounded-lg p-2">
+                    <div className="text-purple-600 font-semibold">Tests</div>
+                    <div className="text-2xl font-bold text-purple-700">{spellingStats.totalTests}</div>
+                  </div>
+                </div>
+              )}
+            </button>
+
+            {/* Maths */}
+            <button
+              onClick={() => selectSubject('maths')}
+              className="w-full bg-white rounded-3xl p-6 shadow-xl active:scale-98 transition-transform"
+            >
+              <div className="flex items-center gap-4 mb-3">
+                <span className="text-5xl">🔢</span>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-2xl text-blue-600">Maths</div>
+                  <div className="text-gray-500 text-sm">105 questions across 8 topics</div>
+                </div>
+              </div>
+              {mathsStats.totalTests > 0 ? (
+                <div className="flex gap-4 text-sm">
+                  <div className="flex-1 bg-blue-50 rounded-lg p-2">
+                    <div className="text-blue-600 font-semibold">Last Score</div>
+                    <div className="text-2xl font-bold text-blue-700">{mathsStats.lastScore}%</div>
+                  </div>
+                  <div className="flex-1 bg-blue-50 rounded-lg p-2">
+                    <div className="text-blue-600 font-semibold">Mastery</div>
+                    <div className="text-2xl font-bold text-blue-700">{mathsStats.mastery}%</div>
+                  </div>
+                  <div className="flex-1 bg-blue-50 rounded-lg p-2">
+                    <div className="text-blue-600 font-semibold">Tests</div>
+                    <div className="text-2xl font-bold text-blue-700">{mathsStats.totalTests}</div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-blue-50 rounded-lg p-3 text-center">
+                  <span className="text-blue-600 font-semibold">✨ New! Start your first test</span>
+                </div>
+              )}
+            </button>
+
+            {/* Science - Coming Soon */}
+            <div className="w-full bg-gray-100 rounded-3xl p-6 shadow-lg opacity-60">
+              <div className="flex items-center gap-4 mb-3">
+                <span className="text-5xl">🔬</span>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-2xl text-gray-500">Science</div>
+                  <div className="text-gray-400 text-sm">Coming soon! 🚀</div>
+                </div>
+              </div>
+              <div className="bg-gray-200 rounded-lg p-3 text-center">
+                <span className="text-gray-500 font-semibold">🔒 Locked</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Settings button */}
+          <button onClick={() => setScreen('settings')} className="w-full mt-6 bg-white/10 rounded-2xl p-4 shadow active:scale-98 flex items-center justify-center gap-2">
+            <span className="text-2xl">⚙️</span>
+            <span className="text-white text-sm">Settings (Dad only)</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (screen === 'home') {
+    const subjectName = currentSubject === 'spelling' ? 'Spelling' : currentSubject === 'maths' ? 'Maths' : 'Science';
+    const subjectIcon = currentSubject === 'spelling' ? '📚' : currentSubject === 'maths' ? '🔢' : '🔬';
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-500 to-indigo-600 p-4">
+        {newBadge && <BadgePopup badge={newBadge} onClose={() => setNewBadge(null)} />}
+        <div className="max-w-md mx-auto">
+          {/* Back button */}
+          <button
+            onClick={() => setScreen('subject-select')}
+            className="text-white/80 text-sm mb-4 flex items-center gap-1 active:scale-95"
+          >
+            ← Back to Subjects
+          </button>
+
+          <div className="bg-white/20 backdrop-blur rounded-2xl p-4 mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-3xl">🪙</span>
+              <span className="text-2xl font-bold text-white">{coins}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🔥</span>
+              <span className="text-xl font-bold text-white">{streak} days</span>
+            </div>
+          </div>
+
+          <h1 className="text-3xl font-bold text-white text-center mb-2 flex items-center justify-center gap-2">
+            <span>{subjectIcon}</span>
+            <span>Alba's {subjectName}</span>
+          </h1>
           <p className="text-white/80 text-center mb-4">Let's practice! 📚</p>
 
           {/* Smart Recommendation */}
@@ -973,14 +1417,52 @@ export default function App() {
 
             {showResult !== null && (
               <div className={`rounded-xl p-4 mb-2 ${showResult.correct ? 'bg-green-100' : 'bg-red-100'}`}>
-                <p className={`text-center font-bold ${showResult.correct ? 'text-green-700' : 'text-red-700'}`}>
-                  {showResult.correct ? (
-                    <>
-                      ✓ Correct! +{showResult.streak === 1 ? 1 : showResult.streak === 2 ? 2 : 3} 🪙
-                      {showResult.streak >= 2 && <span className="block text-sm mt-1">🔥 {showResult.streak} in a row! Streak bonus!</span>}
-                    </>
-                  ) : `✗ It's spelled: ${showResult.word}`}
-                </p>
+                {showResult.correct ? (
+                  <p className="text-center font-bold text-green-700">
+                    ✓ Correct! +{showResult.streak === 1 ? 1 : showResult.streak === 2 ? 2 : 3} 🪙
+                    {showResult.streak >= 2 && <span className="block text-sm mt-1">🔥 {showResult.streak} in a row! Streak bonus!</span>}
+                  </p>
+                ) : (
+                  <div className="text-center">
+                    <p className="font-bold text-red-700 mb-3">Let's learn together! 💪</p>
+
+                    {/* Your spelling - bigger, clearer for dyslexia */}
+                    <div className="mb-2">
+                      <p className="text-xs text-gray-600 mb-1">You wrote:</p>
+                      <div className="flex justify-center gap-1 mb-3">
+                        {(showResult.attempt || '').split('').map((letter, i) => {
+                          const correctWord = showResult.word.toLowerCase();
+                          const isCorrect = i < correctWord.length && letter === correctWord[i];
+                          return (
+                            <span
+                              key={i}
+                              className={`text-2xl font-bold px-1 rounded ${isCorrect ? 'text-green-600' : 'text-red-600'}`}
+                              style={{ fontFamily: 'monospace' }}
+                            >
+                              {letter}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Correct spelling - clear reference */}
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">Correct spelling:</p>
+                      <div className="flex justify-center gap-1">
+                        {showResult.word.toLowerCase().split('').map((letter, i) => (
+                          <span
+                            key={i}
+                            className="text-2xl font-bold text-green-700 px-1"
+                            style={{ fontFamily: 'monospace' }}
+                          >
+                            {letter}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
