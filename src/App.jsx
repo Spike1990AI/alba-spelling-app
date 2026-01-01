@@ -238,8 +238,54 @@ const loadData = () => {
 };
 
 const saveData = (data) => {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Also save to GitHub Gist if token exists
+    syncToGist(data);
+  }
   catch (e) { console.error('Failed to save:', e); }
+};
+
+// Sync data to GitHub Gist
+const syncToGist = async (data) => {
+  const token = localStorage.getItem('github_token');
+  if (!token) return; // Skip if no token configured
+
+  const gistId = localStorage.getItem('gist_id');
+  const content = JSON.stringify(data, null, 2);
+
+  try {
+    const url = gistId
+      ? `https://api.github.com/gists/${gistId}`
+      : 'https://api.github.com/gists';
+
+    const method = gistId ? 'PATCH' : 'POST';
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        description: 'Alba Spelling Test Data - Auto-synced',
+        public: false,
+        files: {
+          'alba-spelling-data.json': {
+            content
+          }
+        }
+      })
+    });
+
+    if (response.ok) {
+      const gist = await response.json();
+      localStorage.setItem('gist_id', gist.id);
+      console.log('✅ Synced to Gist:', gist.html_url);
+    }
+  } catch (error) {
+    console.warn('GitHub sync failed:', error);
+  }
 };
 
 // ============ SMART WORD SELECTION ============
@@ -897,6 +943,8 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
   const [saved, setSaved] = useState(false);
   const [newPin, setNewPin] = useState('');
   const [pinSaved, setPinSaved] = useState(false);
+  const [githubToken, setGithubToken] = useState(localStorage.getItem('github_token') || '');
+  const [githubSaved, setGithubSaved] = useState(false);
 
   const handleSave = () => {
     ttsService.setApiKey(apiKey);
@@ -913,6 +961,12 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
     } else {
       alert('PIN must be exactly 4 digits');
     }
+  };
+
+  const handleGithubSave = () => {
+    localStorage.setItem('github_token', githubToken);
+    setGithubSaved(true);
+    setTimeout(() => setGithubSaved(false), 2000);
   };
 
   return (
@@ -942,6 +996,36 @@ function SettingsScreen({ ttsService, onBack, onOpenDashboard }) {
           <button onClick={handlePinSave} className={`w-full py-3 rounded-lg font-bold text-white ${pinSaved ? 'bg-green-500' : 'bg-orange-500'} active:scale-98`}>
             {pinSaved ? '✓ PIN Changed!' : 'Save New PIN'}
           </button>
+        </div>
+
+        <div className="bg-white rounded-2xl p-6 mb-4">
+          <h2 className="font-bold text-gray-800 mb-2">☁️ GitHub Cloud Backup</h2>
+          <p className="text-gray-600 text-sm mb-4">
+            Auto-saves all test data to private GitHub Gist. Never lose progress!
+            <br/><a href="https://github.com/settings/tokens/new?scopes=gist&description=Alba%20Spelling%20Backup" target="_blank" className="text-blue-600 underline">Get token here</a>
+          </p>
+          <input
+            type="password"
+            value={githubToken}
+            onChange={(e) => setGithubToken(e.target.value)}
+            placeholder="ghp_..."
+            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none mb-3 font-mono text-sm"
+          />
+          <button onClick={handleGithubSave} className={`w-full py-3 rounded-lg font-bold text-white ${githubSaved ? 'bg-green-500' : 'bg-purple-600'} active:scale-98`}>
+            {githubSaved ? '✓ Cloud Backup Active!' : 'Enable Cloud Backup'}
+          </button>
+          {localStorage.getItem('gist_id') && (
+            <div className="mt-3 p-3 bg-green-50 rounded-lg">
+              <p className="text-green-700 text-sm font-semibold mb-2">✓ Syncing to GitHub</p>
+              <a
+                href={`https://gist.github.com/${localStorage.getItem('gist_id')}`}
+                target="_blank"
+                className="text-blue-600 text-xs underline"
+              >
+                View backup on GitHub →
+              </a>
+            </div>
+          )}
         </div>
 
         <div className="bg-white rounded-2xl p-6 mb-4">
