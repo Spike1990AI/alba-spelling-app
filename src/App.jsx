@@ -658,6 +658,11 @@ export default function App() {
       <div className="min-h-screen bg-gradient-to-b from-blue-500 to-cyan-600 p-4 relative">
         {coinAnim && <CoinAnimation amount={coinAnim} />}
         <div className="max-w-md mx-auto">
+          {/* DEBUG INFO */}
+          <div className="bg-black/50 text-white text-xs p-2 rounded mb-2 font-mono">
+            Word {currentIndex + 1}/{testWords.length} | Saved: {results.length} results
+          </div>
+
           <div className="flex items-center justify-between mb-4">
             <button onClick={() => setScreen('home')} className="text-white/80 text-sm">✕ Quit</button>
             <div className="flex items-center gap-2">
