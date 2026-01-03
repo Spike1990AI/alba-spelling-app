@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic - Alba's App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        .check {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .check.ok { background: #e8f5e9; color: #388e3c; }
+        .check.fail { background: #ffebee; color: #d32f2f; }
+        .check.warn { background: #fff3e0; color: #f57c00; }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 200px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover { background: #5568d3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Diagnostic Tool</h1>
+        <div id="results"></div>
+        <button onclick="runDiagnostic()">Run Diagnostic</button>
+    </div>
+
+    <script>
+        async function runDiagnostic() {
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            // Check 1: Token exists
+            const token = localStorage.getItem('github_token');
+            addCheck(token ? 'ok' : 'fail',
+                `Token: ${token ? token.substring(0, 10) + '...' : 'NOT FOUND'}`);
+
+            // Check 2: Gist ID exists
+            const gistId = localStorage.getItem('gist_id');
+            addCheck(gistId ? 'ok' : 'fail',
+                `Gist ID: ${gistId || 'NOT FOUND'}`);
+
+            // Check 3: Data exists
+            const data = localStorage.getItem('alba_spelling_data');
+            addCheck(data ? 'ok' : 'fail',
+                `Data: ${data ? (data.length + ' bytes') : 'NOT FOUND'}`);
+
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    addCheck('ok', `Data valid JSON`);
+                    results.innerHTML += `<pre>${JSON.stringify(parsed, null, 2).substring(0, 500)}...</pre>`;
+                } catch(e) {
+                    addCheck('fail', `Data invalid JSON: ${e.message}`);
+                }
+            }
+
+            // Check 4: Test API with token
+            if (token && gistId) {
+                addCheck('warn', 'Testing API call...');
+                try {
+                    const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+                        headers: {
+                            'Authorization': `token ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        addCheck('ok', `API call SUCCESS (${response.status})`);
+                        const gist = await response.json();
+                        addCheck('ok', `Gist owner: ${gist.owner.login}`);
+                    } else {
+                        const error = await response.text();
+                        addCheck('fail', `API call FAILED (${response.status}): ${error.substring(0, 100)}`);
+                    }
+                } catch(e) {
+                    addCheck('fail', `API call ERROR: ${e.message}`);
+                }
+            }
+        }
+
+        function addCheck(type, message) {
+            const div = document.createElement('div');
+            div.className = `check ${type}`;
+            div.textContent = (type === 'ok' ? '✓ ' : type === 'fail' ? '✗ ' : '⚠ ') + message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        // Run on load
+        runDiagnostic();
+    </script>
+</body>
+</html>
